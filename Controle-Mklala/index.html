@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#667eea">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>💰 Controle Financeiro - Família Mkala</title>
+    <title>💰 Merkai Finance - Controle Financeiro</title>
     <style>
         * {
             margin: 0;
@@ -40,6 +40,10 @@
         .header h1 {
             font-size: 1.5rem;
             margin-bottom: 8px;
+        }
+
+        .header h1 span {
+            font-size: 1.8rem;
         }
 
         .header p {
@@ -294,7 +298,6 @@
             font-size: 0.8rem;
         }
 
-        /* Botão de atualização manual (sem texto de auto-refresh) */
         .update-btn {
             background: #667eea;
             color: white;
@@ -411,8 +414,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>💰 Controle Financeiro</h1>
-            <p>Família Mkala</p>
+            <h1>💰 Merkai Finance</h1>
+            <p>Controle Financeiro Inteligente</p>
             <div class="last-update" id="lastUpdate">🔄 Carregando dados...</div>
         </div>
 
@@ -492,7 +495,7 @@
         // LINK DO SEU GOOGLE FORMS - COLOQUE O SEU LINK AQUI!
         const SEU_FORMS_URL = "https://docs.google.com/forms/d/e/SEU_ID_AQUI/viewform";
         
-        // TEMPO DE AUTO-REFRESH (em segundos) - O ICONE FOI REMOVIDO, MAS A FUNÇÃO CONTINUA
+        // TEMPO DE AUTO-REFRESH (em segundos)
         const TEMPO_REFRESH = 30;
         
         // ============================================
@@ -844,11 +847,9 @@
 
         function iniciarAutoRefresh() {
             if (intervaloAutoRefresh) clearInterval(intervaloAutoRefresh);
-            // Auto-refresh continua funcionando nos bastidores a cada 30 segundos
             intervaloAutoRefresh = setInterval(() => { 
                 if (!carregando) {
                     carregarDados();
-                    // Atualiza silenciosamente sem notificação
                 }
             }, TEMPO_REFRESH * 1000);
         }
