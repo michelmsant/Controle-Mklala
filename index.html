@@ -42,10 +42,6 @@
             margin-bottom: 8px;
         }
 
-        .header h1 span {
-            font-size: 1.8rem;
-        }
-
         .header p {
             font-size: 0.85rem;
             opacity: 0.9;
@@ -485,31 +481,22 @@
     </div>
 
     <script>
-        // ============================================
-        // CONFIGURAÇÕES - EDITAR AQUI!
-        // ============================================
-        
-        // LINK DA SUA PLANILHA
+        // CONFIGURAÇÕES - VOCÊ PODE EDITAR AQUI!
         const SUA_PLANILHA_URL = "https://docs.google.com/spreadsheets/d/10rAYr6HVqSoI8doun6btTfLTvvu0uu2rPMoRBGYzO6Q/edit?usp=sharing";
-        
-        // LINK DO SEU GOOGLE FORMS - COLOQUE O SEU LINK AQUI!
         const SEU_FORMS_URL = "https://docs.google.com/forms/d/e/SEU_ID_AQUI/viewform";
-        
-        // TEMPO DE AUTO-REFRESH (em segundos)
         const TEMPO_REFRESH = 30;
         
-        // ============================================
-        // NÃO MEXA DAQUI PARA BAIXO
-        // ============================================
-        
+        // Extrair ID da planilha
         const PLANILHA_ID = SUA_PLANILHA_URL.match(/\/d\/([a-zA-Z0-9_-]+)/)[1];
         
         let dadosOriginais = [];
         let dadosFiltrados = [];
-        let graficoCategoria, graficoPagamento;
-        let intervaloAutoRefresh;
+        let graficoCategoria = null;
+        let graficoPagamento = null;
+        let intervaloAutoRefresh = null;
         let carregando = false;
 
+        // Função para rolar para seção
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
@@ -517,6 +504,7 @@
             }
         }
 
+        // Extrair apenas a data
         function extrairApenasData(valorData) {
             if (!valorData) return '';
             try {
@@ -542,6 +530,7 @@
             }
         }
 
+        // Formatar data para exibição
         function formatarDataExibicao(dataStr) {
             if (!dataStr) return '-';
             try {
@@ -553,6 +542,7 @@
             return dataStr;
         }
 
+        // Carregar dados da planilha
         async function carregarDados() {
             if (carregando) return;
             carregando = true;
@@ -593,6 +583,7 @@
             carregando = false;
         }
 
+        // Processar os dados
         function processarDados(dados) {
             dadosOriginais = dados.map(linha => {
                 let dataRaw = '';
@@ -641,6 +632,7 @@
             filtrarDados();
         }
 
+        // Filtrar dados
         function filtrarDados() {
             const categoria = document.getElementById('categoryFilter').value;
             const tipo = document.getElementById('typeFilter').value;
@@ -662,6 +654,7 @@
             atualizarFiltrosCategorias();
         }
 
+        // Limpar filtros
         function limparFiltros() {
             document.getElementById('categoryFilter').value = '';
             document.getElementById('typeFilter').value = '';
@@ -670,11 +663,13 @@
             mostrarNotificacao('🧹 Filtros limpos!', '#6c757d');
         }
 
+        // Forçar atualização
         function forcarAtualizacao() {
             mostrarNotificacao('🔄 Atualizando...', '#007bff');
             carregarDados();
         }
 
+        // Atualizar estatísticas
         function atualizarEstatisticas() {
             const totalReceitas = dadosFiltrados.filter(i => i.tipo === 'Receita').reduce((s, i) => s + i.valor, 0);
             const totalDespesas = dadosFiltrados.filter(i => i.tipo === 'Despesa').reduce((s, i) => s + i.valor, 0);
@@ -703,6 +698,7 @@
             document.getElementById('stats').innerHTML = html;
         }
 
+        // Filtrar por tipo
         function filtrarPorTipo(tipo) {
             document.getElementById('typeFilter').value = tipo;
             filtrarDados();
@@ -711,7 +707,9 @@
             }
         }
 
+        // Atualizar gráficos
         function atualizarGraficos() {
+            // Gráfico de despesas por categoria
             const despesasPorCategoria = {};
             dadosFiltrados.filter(i => i.tipo === 'Despesa').forEach(i => {
                 despesasPorCategoria[i.categoria] = (despesasPorCategoria[i.categoria] || 0) + i.valor;
@@ -740,6 +738,7 @@
                 }
             });
             
+            // Gráfico de formas de pagamento
             const pagamentos = {};
             dadosFiltrados.forEach(i => {
                 pagamentos[i.formaPagamento] = (pagamentos[i.formaPagamento] || 0) + i.valor;
@@ -769,6 +768,7 @@
             });
         }
 
+        // Atualizar tabela
         function atualizarTabela() {
             if (dadosFiltrados.length === 0) {
                 document.getElementById('tableContent').innerHTML = '<div class="loading">📭 Nenhuma transação encontrada.</div>';
@@ -810,6 +810,7 @@
             document.getElementById('tableContent').innerHTML = html;
         }
 
+        // Atualizar filtros de categorias
         function atualizarFiltrosCategorias() {
             const categorias = [...new Set(dadosOriginais.map(i => i.categoria))];
             const select = document.getElementById('categoryFilter');
@@ -817,11 +818,13 @@
             select.innerHTML = '<option value="">📂 Todas</option>' + categorias.sort().map(c => `<option value="${c}" ${c === atual ? 'selected' : ''}>${c}</option>`).join('');
         }
 
+        // Mostrar loading
         function mostrarLoading() {
             document.getElementById('stats').innerHTML = '<div class="loading">🔄 Carregando...</div>';
             document.getElementById('tableContent').innerHTML = '<div class="loading">📊 Aguarde...</div>';
         }
 
+        // Mostrar notificação
         function mostrarNotificacao(msg, cor) {
             const antiga = document.querySelector('.notification');
             if (antiga) antiga.remove();
@@ -830,21 +833,33 @@
             notif.style.background = cor;
             notif.innerText = msg;
             document.body.appendChild(notif);
-            setTimeout(() => { notif.style.animation = 'fadeOut 0.5s ease'; setTimeout(() => notif.remove(), 500); }, 2500);
+            setTimeout(() => { 
+                notif.style.animation = 'fadeOut 0.5s ease'; 
+                setTimeout(() => notif.remove(), 500); 
+            }, 2500);
         }
 
+        // Mostrar erro
         function mostrarErro(msg) {
             const erro = document.createElement('div');
             erro.className = 'error';
             erro.innerHTML = `❌ ${msg}<br><br><strong>🔧 Solução:</strong><br>Compartilhe a planilha como "Qualquer um com o link pode visualizar"`;
             document.getElementById('stats').innerHTML = '';
-            document.getElementById('stats').parentNode.insertBefore(erro, document.getElementById('stats').nextSibling);
+            const statsDiv = document.getElementById('stats');
+            if (statsDiv && statsDiv.parentNode) {
+                statsDiv.parentNode.insertBefore(erro, statsDiv.nextSibling);
+            }
         }
 
+        // Atualizar hora
         function atualizarHora() {
-            document.getElementById('lastUpdate').innerHTML = `📅 ${new Date().toLocaleString('pt-BR')}`;
+            const lastUpdate = document.getElementById('lastUpdate');
+            if (lastUpdate) {
+                lastUpdate.innerHTML = `📅 ${new Date().toLocaleString('pt-BR')}`;
+            }
         }
 
+        // Iniciar auto-refresh
         function iniciarAutoRefresh() {
             if (intervaloAutoRefresh) clearInterval(intervaloAutoRefresh);
             intervaloAutoRefresh = setInterval(() => { 
@@ -854,6 +869,7 @@
             }, TEMPO_REFRESH * 1000);
         }
 
+        // Carregar dados de exemplo
         function carregarDadosExemplo() {
             dadosOriginais = [
                 { data: '2024-01-15', tipo: 'Receita', categoria: 'Salário', descricao: 'Salário', valor: 5000, formaPagamento: 'Débito', necessidade: 'Alta' },
@@ -865,18 +881,23 @@
         }
 
         // Configurar link do Forms
-        if (SEU_FORMS_URL && SEU_FORMS_URL !== "https://docs.google.com/forms/d/e/SEU_ID_AQUI/viewform") {
-            document.getElementById('formsLink').href = SEU_FORMS_URL;
-        } else {
-            document.getElementById('formsLink').style.display = "none";
+        const formsLink = document.getElementById('formsLink');
+        if (formsLink) {
+            if (SEU_FORMS_URL && SEU_FORMS_URL !== "https://docs.google.com/forms/d/e/SEU_ID_AQUI/viewform") {
+                formsLink.href = SEU_FORMS_URL;
+            } else {
+                formsLink.style.display = "none";
+            }
         }
 
+        // Expor funções globais
         window.scrollToSection = scrollToSection;
         window.filtrarPorTipo = filtrarPorTipo;
         window.filtrarDados = filtrarDados;
         window.limparFiltros = limparFiltros;
         window.forcarAtualizacao = forcarAtualizacao;
         
+        // Iniciar aplicação
         carregarDados();
         iniciarAutoRefresh();
     </script>
