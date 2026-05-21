@@ -28,7 +28,6 @@
   --card-glow: rgba(124,106,240,0.18);
   --shell-bg:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,106,240,0.14) 0%, transparent 70%);
   --device-shadow: 0 0 0 1px rgba(0,0,0,0.5), 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
-  --login-glow: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(124,106,240,0.35) 0%, transparent 65%);
 }
 
 /* ── Tokens light ── */
@@ -46,7 +45,6 @@
   --card-glow: rgba(124,106,240,0.08);
   --shell-bg:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,106,240,0.07) 0%, transparent 70%);
   --device-shadow: 0 0 0 1px rgba(124,106,240,0.12), 0 32px 60px rgba(100,90,160,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
-  --login-glow: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(124,106,240,0.18) 0%, transparent 65%);
 }
 
 /* ── Shared accent colors ── */
@@ -62,7 +60,6 @@
   --amber-bg:   rgba(240,169,70,0.12);
   --blue:       #5ba3f5;
   --blue-bg:    rgba(91,163,245,0.12);
-  --pink:       #e46db4;
   --radius:     14px;
   --radius-sm:  8px;
   --radius-lg:  20px;
@@ -121,130 +118,14 @@ html, body {
 }
 
 /* ════════════════════════════════════════════
-   LOGIN SCREEN
-   ════════════════════════════════════════════ */
-#page-login {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  background: var(--bg2);
-  transition: background 0.3s;
-  z-index: 500;
-  overflow-y: auto;
-  scrollbar-width: none;
-}
-#page-login::-webkit-scrollbar { display: none; }
-
-.login-hero {
-  flex-shrink: 0;
-  padding: calc(var(--sat) + 50px) 32px 36px;
-  text-align: center;
-  position: relative;
-}
-.login-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--login-glow);
-  pointer-events: none;
-}
-.login-logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 32px;
-}
-.login-logo-icon {
-  width: 52px; height: 52px;
-  background: var(--accent);
-  border-radius: 16px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 26px;
-  box-shadow: 0 8px 24px rgba(124,106,240,0.4);
-}
-.login-logo-name {
-  font-family: var(--font-display);
-  font-size: 30px; font-weight: 800;
-  letter-spacing: -1px;
-  color: var(--text);
-}
-.login-tagline {
-  font-size: 13px;
-  color: var(--text3);
-  margin-top: -6px;
-}
-
-.login-form {
-  padding: 0 24px calc(var(--sab) + 32px);
-  display: flex; flex-direction: column;
-  gap: 14px;
-  flex: 1;
-}
-.login-field {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px 16px;
-  display: flex; align-items: center; gap: 12px;
-}
-.login-field:focus-within {
-  border-color: var(--accent);
-}
-.login-field-icon { font-size: 18px; }
-.login-input {
-  flex: 1;
-  background: transparent; border: none; outline: none;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 15px;
-}
-.login-input::placeholder { color: var(--text3); }
-.login-btn {
-  width: 100%; padding: 16px;
-  background: var(--accent);
-  border: none; border-radius: var(--radius);
-  font-family: var(--font-display); font-size: 16px; font-weight: 700;
-  color: white; cursor: pointer;
-  box-shadow: 0 8px 20px rgba(124,106,240,0.35);
-  transition: transform 0.15s;
-}
-.login-btn:active { transform: scale(0.97); }
-.login-error {
-  background: var(--red-bg);
-  border: 1px solid rgba(240,100,102,0.25);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--red);
-  display: none;
-}
-.login-error.show { display: block; }
-.login-hint {
-  text-align: center;
-  font-size: 11px;
-  color: var(--text3);
-  margin-top: 8px;
-}
-
-#page-login {
-  opacity: 1;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-#page-login.exit {
-  opacity: 0;
-  transform: translateY(-24px);
-  pointer-events: none;
-}
-
-/* ════════════════════════════════════════════
    APP SCREENS
    ════════════════════════════════════════════ */
 .app-wrapper {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.35s ease 0.2s;
+  opacity: 1;
+  pointer-events: all;
 }
-.app-wrapper.visible { opacity: 1; pointer-events: all; }
 
 .screens { flex: 1; overflow: hidden; position: relative; padding-top: 44px; }
 @media (max-width: 500px) { .screens { padding-top: max(44px, var(--sat)); } }
@@ -286,7 +167,6 @@ html, body {
   background: var(--accent-bg); border: 1.5px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
   font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--accent2);
-  cursor: pointer;
 }
 
 /* ── Tab bar ── */
@@ -516,43 +396,17 @@ th {
   <div class="device">
     <div class="notch"></div>
 
-    <!-- Login Screen -->
-    <div id="page-login">
-      <div class="login-hero">
-        <div class="login-logo">
-          <div class="login-logo-icon">💰</div>
-          <div class="login-logo-name">Merkai</div>
-        </div>
-        <div class="login-tagline">finanças que fazem sentido</div>
-      </div>
-      <div class="login-form">
-        <div class="login-error" id="loginError">❌ Usuário ou senha incorretos</div>
-        <div class="login-field">
-          <span class="login-field-icon">👤</span>
-          <input type="text" class="login-input" id="loginUser" placeholder="Usuário" value="admin">
-        </div>
-        <div class="login-field">
-          <span class="login-field-icon">🔒</span>
-          <input type="password" class="login-input" id="loginPass" placeholder="Senha" value="">
-        </div>
-        <button class="login-btn" id="loginBtn">Entrar</button>
-        <div class="login-hint">
-          🔑 Dica: usuário <strong>admin</strong> | senha <strong>merkai</strong>
-        </div>
-      </div>
-    </div>
-
-    <!-- App Wrapper -->
-    <div class="app-wrapper" id="appWrapper">
+    <!-- App Wrapper - Sem tela de login -->
+    <div class="app-wrapper">
       <div class="screens">
         <!-- HOME Screen -->
         <div class="screen active" id="screen-home">
           <div class="top-bar">
-            <h1>Olá,<br><span id="userNameDisplay">Visitante</span></h1>
+            <h1>Olá,<br><span id="userNameDisplay">Família</span></h1>
             <div class="top-bar-right">
               <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
               <button class="refresh-btn" onclick="forcarAtualizacao()">🔄</button>
-              <div class="avatar" onclick="logout()">👤</div>
+              <div class="avatar">👤</div>
             </div>
           </div>
           <div id="homeContent">
@@ -566,7 +420,7 @@ th {
             <h1>Dashboard</h1>
             <div class="top-bar-right">
               <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-              <div class="avatar" onclick="logout()">👤</div>
+              <div class="avatar">👤</div>
             </div>
           </div>
           <div id="dashboardContent">
@@ -580,7 +434,7 @@ th {
             <h1>Registros</h1>
             <div class="top-bar-right">
               <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
-              <div class="avatar" onclick="logout()">👤</div>
+              <div class="avatar">👤</div>
             </div>
           </div>
           <div id="geralContent">
@@ -635,14 +489,441 @@ const savedTheme = localStorage.getItem('merkai-theme');
 if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 
 // ============================================
-// LOGIN - CORRIGIDO!
+// TABS
 // ============================================
-let isLoggedIn = false;
+const tabs = document.querySelectorAll('.tab');
+const screens = {
+  home: document.getElementById('screen-home'),
+  dashboard: document.getElementById('screen-dashboard'),
+  geral: document.getElementById('screen-geral')
+};
 
-function doLogin() {
-  const user = document.getElementById('loginUser').value;
-  const pass = document.getElementById('loginPass').value;
-  const errorDiv = document.getElementById('loginError');
+function switchScreen(screenId) {
+  Object.keys(screens).forEach(id => {
+    screens[id].classList.remove('active');
+  });
+  screens[screenId].classList.add('active');
+  tabs.forEach(tab => {
+    tab.classList.remove('active');
+    if (tab.getAttribute('data-screen') === screenId) tab.classList.add('active');
+  });
+}
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const screenId = tab.getAttribute('data-screen');
+    switchScreen(screenId);
+    if (screenId === 'dashboard') atualizarDashboard();
+    if (screenId === 'geral') atualizarTabelaGeral();
+  });
+});
+
+// ============================================
+// CARREGAR DADOS
+// ============================================
+async function carregarDados() {
+  if (carregando) return;
+  carregando = true;
+  mostrarNotificacao('🔄 Carregando dados da planilha...', '#7c6af0');
   
-  // Credenciais corretas
-  if (user === 'admin' && pass === 'merkai')
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:json`;
+    const resposta = await fetch(url);
+    const texto = await resposta.text();
+    const jsonString = texto.substring(47, texto.length - 2);
+    const dados = JSON.parse(jsonString);
+    
+    if (dados.table && dados.table.rows) {
+      const cabecalhos = dados.table.cols.map(col => col.label);
+      const linhas = dados.table.rows.map(row => {
+        const obj = {};
+        row.c.forEach((celula, index) => {
+          if (cabecalhos[index] && celula && celula.v !== null) {
+            obj[cabecalhos[index]] = celula.v;
+          }
+        });
+        return obj;
+      }).filter(row => Object.keys(row).length > 0);
+      
+      processarDados(linhas);
+      mostrarNotificacao('✅ Dados carregados com sucesso!', '#3ecf8e');
+    } else {
+      throw new Error('Nenhum dado encontrado');
+    }
+  } catch (erro) {
+    console.error(erro);
+    mostrarNotificacao('❌ Erro ao carregar dados. Usando dados de exemplo.', '#f06466');
+    carregarExemplo();
+  }
+  carregando = false;
+}
+
+function extrairData(val) {
+  if (!val) return '';
+  if (typeof val === 'string') {
+    const match = val.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+    if (match) return `${match[3]}-${match[2]}-${match[1]}`;
+    const d = new Date(val);
+    if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
+  }
+  if (typeof val === 'number') {
+    const d = new Date((val - 25569) * 86400000);
+    if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
+  }
+  return '';
+}
+
+function formatarData(dataStr) {
+  if (!dataStr) return '-';
+  try {
+    const d = new Date(dataStr);
+    return d.toLocaleDateString('pt-BR');
+  } catch(e) { return dataStr; }
+}
+
+function processarDados(dados) {
+  dadosCompletos = dados.map(linha => {
+    let data = '', tipo = 'Receita', categoria = 'Outros', descricao = '';
+    let valor = 0, formaPagamento = 'Outros', necessidade = 'Média', registro = '';
+    
+    Object.keys(linha).forEach(chave => {
+      const chaveLower = chave.toLowerCase();
+      const val = linha[chave];
+      
+      if (chaveLower === 'data' || chaveLower.includes('data') || chaveLower === 'carimbo de data/hora') data = extrairData(val);
+      else if (chaveLower === 'tipo' || chaveLower.includes('tipo')) tipo = String(val).toLowerCase().includes('despesa') ? 'Despesa' : 'Receita';
+      else if (chaveLower === 'categoria' || chaveLower.includes('categoria')) categoria = val || 'Outros';
+      else if (chaveLower.includes('descrição') || chaveLower.includes('descricao')) descricao = val || '';
+      else if (chaveLower === 'valor' || chaveLower.includes('valor')) valor = typeof val === 'number' ? val : parseFloat(String(val).replace('R$', '').replace(/\./g, '').replace(',', '.')) || 0;
+      else if (chaveLower.includes('pagamento') || chaveLower === 'forma de pagamento') formaPagamento = val || 'Outros';
+      else if (chaveLower === 'necessidade' || chaveLower.includes('necessidade')) necessidade = val || 'Média';
+      else if (chaveLower === 'registro' || chaveLower.includes('registro')) registro = val || 'Não informado';
+    });
+    
+    return { data, tipo, categoria, descricao, valor, formaPagamento, necessidade, registro };
+  }).filter(item => item.valor > 0);
+  
+  atualizarHome();
+  atualizarDashboard();
+  atualizarTabelaGeral();
+}
+
+// ============================================
+// HOME
+// ============================================
+function atualizarHome() {
+  const receitas = dadosCompletos.filter(i => i.tipo === 'Receita').reduce((s, i) => s + i.valor, 0);
+  const despesas = dadosCompletos.filter(i => i.tipo === 'Despesa').reduce((s, i) => s + i.valor, 0);
+  const saldo = receitas - despesas;
+  
+  const categoriasInvestimento = ['Investimento', 'Poupança', 'Ações', 'Previdência', 'FIIs', 'CDB', 'Tesouro'];
+  const investimentos = dadosCompletos.filter(i => i.tipo === 'Despesa' && categoriasInvestimento.some(cat => i.categoria.includes(cat))).reduce((s, i) => s + i.valor, 0);
+  
+  const despesasPorRegistro = {};
+  dadosCompletos.filter(i => i.tipo === 'Despesa').forEach(i => {
+    const registro = i.registro || 'Não informado';
+    despesasPorRegistro[registro] = (despesasPorRegistro[registro] || 0) + i.valor;
+  });
+  const rankingDespesas = Object.entries(despesasPorRegistro).sort((a,b) => b[1] - a[1]).slice(0, 5);
+  
+  const investimentosPorRegistro = {};
+  dadosCompletos.filter(i => i.tipo === 'Despesa' && categoriasInvestimento.some(cat => i.categoria.includes(cat))).forEach(i => {
+    const registro = i.registro || 'Não informado';
+    investimentosPorRegistro[registro] = (investimentosPorRegistro[registro] || 0) + i.valor;
+  });
+  const rankingInvestimentos = Object.entries(investimentosPorRegistro).sort((a,b) => b[1] - a[1]).slice(0, 5);
+  
+  const ultimos = [...dadosCompletos].sort((a,b) => b.data.localeCompare(a.data)).slice(0, 10);
+  
+  const html = `
+    <div class="balance-card">
+      <div class="balance-label">Saldo disponível</div>
+      <div class="balance-value ${saldo >= 0 ? 'positive' : 'negative'}">R$ ${saldo.toFixed(2)}</div>
+      <div class="balance-row">
+        <div class="balance-item"><div class="balance-item-label">💰 Receitas</div><div class="balance-item-val positive">R$ ${receitas.toFixed(2)}</div></div>
+        <div class="balance-item"><div class="balance-item-label">💸 Despesas</div><div class="balance-item-val negative">R$ ${despesas.toFixed(2)}</div></div>
+        <div class="balance-item"><div class="balance-item-label">📈 Investido</div><div class="balance-item-val" style="color: var(--amber)">R$ ${investimentos.toFixed(2)}</div></div>
+      </div>
+    </div>
+    
+    <div class="rankings-grid">
+      <div class="ranking-card">
+        <h3>🏆 Quem mais gera despesa</h3>
+        ${rankingDespesas.map(([nome, valor], idx) => `
+          <div class="ranking-item">
+            <div class="ranking-name">
+              <div class="ranking-position ${idx === 0 ? 'gold' : idx === 1 ? 'silver' : idx === 2 ? 'bronze' : ''}">${idx + 1}</div>
+              <span>${nome}</span>
+            </div>
+            <div class="ranking-value">R$ ${valor.toFixed(2)}</div>
+          </div>
+        `).join('') || '<div class="ranking-item">Nenhum dado</div>'}
+      </div>
+      <div class="ranking-card">
+        <h3>📈 Investimentos por registro</h3>
+        ${rankingInvestimentos.map(([nome, valor], idx) => `
+          <div class="ranking-item">
+            <div class="ranking-name">
+              <div class="ranking-position ${idx === 0 ? 'gold' : idx === 1 ? 'silver' : idx === 2 ? 'bronze' : ''}">${idx + 1}</div>
+              <span>${nome}</span>
+            </div>
+            <div class="ranking-value invest">R$ ${valor.toFixed(2)}</div>
+          </div>
+        `).join('') || '<div class="ranking-item">Nenhum investimento registrado</div>'}
+      </div>
+    </div>
+    
+    <div class="section">
+      <div class="section-title">Últimos lançamentos</div>
+      <div class="tx-list">
+        ${ultimos.map(i => `
+          <div class="tx-item">
+            <div class="tx-icon">${i.tipo === 'Receita' ? '💰' : '💸'}</div>
+            <div class="tx-info">
+              <div class="tx-name">${i.descricao || i.categoria}</div>
+              <div class="tx-cat">${i.categoria} • ${i.registro || '-'}</div>
+            </div>
+            <div style="text-align: right">
+              <div class="tx-amount ${i.tipo === 'Receita' ? 'positive' : 'negative'}">R$ ${i.valor.toFixed(2)}</div>
+              <div class="tx-date">${formatarData(i.data)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('homeContent').innerHTML = html;
+}
+
+// ============================================
+// DASHBOARD
+// ============================================
+function atualizarDashboard() {
+  const despesas = dadosCompletos.filter(i => i.tipo === 'Despesa');
+  
+  const porCategoria = {};
+  despesas.forEach(i => { porCategoria[i.categoria] = (porCategoria[i.categoria] || 0) + i.valor; });
+  
+  const porDescricao = {};
+  despesas.forEach(i => { porDescricao[i.descricao || 'Sem descrição'] = (porDescricao[i.descricao || 'Sem descrição'] || 0) + i.valor; });
+  const descSorted = Object.entries(porDescricao).sort((a,b) => b[1] - a[1]).slice(0, 5);
+  
+  const porPagamento = {};
+  dadosCompletos.forEach(i => { porPagamento[i.formaPagamento] = (porPagamento[i.formaPagamento] || 0) + i.valor; });
+  
+  const porNecessidade = {};
+  despesas.forEach(i => { porNecessidade[i.necessidade] = (porNecessidade[i.necessidade] || 0) + i.valor; });
+  
+  const porDia = {};
+  despesas.forEach(i => { if (i.data) { const dia = formatarData(i.data); porDia[dia] = (porDia[dia] || 0) + i.valor; } });
+  const diasSorted = Object.entries(porDia).sort((a,b) => b[1] - a[1]).slice(0, 7);
+  
+  const html = `
+    <div class="chart-container">
+      <div class="chart-title">📊 Despesas por categoria</div>
+      <canvas id="catChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">🏷️ Despesas por descrição (top 5)</div>
+      <canvas id="descChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">💳 Formas de pagamento</div>
+      <canvas id="payChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">⚠️ Índice de necessidade</div>
+      <canvas id="needChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">📅 Dias com mais despesas</div>
+      <canvas id="dayChart"></canvas>
+    </div>
+  `;
+  document.getElementById('dashboardContent').innerHTML = html;
+  
+  setTimeout(() => {
+    if (chartCategoria) chartCategoria.destroy();
+    const ctx1 = document.getElementById('catChart');
+    if (ctx1) {
+      chartCategoria = new Chart(ctx1, {
+        type: 'pie', data: { labels: Object.keys(porCategoria), datasets: [{ data: Object.values(porCategoria), backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+      });
+    }
+    
+    if (chartDescricao) chartDescricao.destroy();
+    const ctx2 = document.getElementById('descChart');
+    if (ctx2) {
+      chartDescricao = new Chart(ctx2, {
+        type: 'pie', data: { labels: descSorted.map(d => d[0]), datasets: [{ data: descSorted.map(d => d[1]), backgroundColor: ['#FF9F40','#FF6384','#36A2EB','#FFCE56','#4BC0C0'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+      });
+    }
+    
+    if (chartPagamento) chartPagamento.destroy();
+    const ctx3 = document.getElementById('payChart');
+    if (ctx3) {
+      chartPagamento = new Chart(ctx3, {
+        type: 'doughnut', data: { labels: Object.keys(porPagamento), datasets: [{ data: Object.values(porPagamento), backgroundColor: ['#4BC0C0','#FF9F40','#FF6384','#36A2EB'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
+      });
+    }
+    
+    if (chartNecessidade) chartNecessidade.destroy();
+    const ctx4 = document.getElementById('needChart');
+    if (ctx4) {
+      chartNecessidade = new Chart(ctx4, {
+        type: 'bar', data: { labels: Object.keys(porNecessidade), datasets: [{ data: Object.values(porNecessidade), backgroundColor: '#7c6af0' }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+      });
+    }
+    
+    if (chartDias) chartDias.destroy();
+    const ctx5 = document.getElementById('dayChart');
+    if (ctx5) {
+      chartDias = new Chart(ctx5, {
+        type: 'bar', data: { labels: diasSorted.map(d => d[0]), datasets: [{ data: diasSorted.map(d => d[1]), backgroundColor: '#f0a946' }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
+      });
+    }
+  }, 100);
+}
+
+// ============================================
+// GERAL
+// ============================================
+function atualizarTabelaGeral() {
+  const html = `
+    <div class="export-buttons">
+      <button class="btn-export excel" onclick="exportarExcel()">📊 Excel</button>
+      <button class="btn-export csv" onclick="exportarCSV()">📄 CSV</button>
+      <button class="btn-refresh" onclick="forcarAtualizacao()">🔄 Atualizar</button>
+    </div>
+    <div class="filters">
+      <select id="filterCategoria" onchange="filtrarTabelaGeral()"><option value="">Todas categorias</option></select>
+      <select id="filterTipo" onchange="filtrarTabelaGeral()"><option value="">Todos os tipos</option><option value="Receita">💰 Receitas</option><option value="Despesa">💸 Despesas</option></select>
+      <input type="month" id="filterMes" onchange="filtrarTabelaGeral()">
+    </div>
+    <div class="table-container" id="tabelaGeralContainer"></div>
+  `;
+  document.getElementById('geralContent').innerHTML = html;
+  atualizarFiltrosEOLista();
+}
+
+function atualizarFiltrosEOLista() {
+  const categorias = [...new Set(dadosCompletos.map(i => i.categoria))];
+  const selectCat = document.getElementById('filterCategoria');
+  if (selectCat) {
+    const atual = selectCat.value;
+    selectCat.innerHTML = '<option value="">Todas categorias</option>' + categorias.sort().map(c => `<option value="${c}" ${c === atual ? 'selected' : ''}>${c}</option>`).join('');
+  }
+  filtrarTabelaGeral();
+}
+
+function filtrarTabelaGeral() {
+  const cat = document.getElementById('filterCategoria')?.value || '';
+  const tipo = document.getElementById('filterTipo')?.value || '';
+  const mes = document.getElementById('filterMes')?.value || '';
+  
+  let filtrados = [...dadosCompletos];
+  if (cat) filtrados = filtrados.filter(i => i.categoria === cat);
+  if (tipo) filtrados = filtrados.filter(i => i.tipo === tipo);
+  if (mes) filtrados = filtrados.filter(i => i.data && i.data.substring(0, 7) === mes);
+  
+  const container = document.getElementById('tabelaGeralContainer');
+  if (container) {
+    container.innerHTML = `
+      <table>
+        <thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Pagamento</th><th>Necessidade</th><th>Registro</th></tr></thead>
+        <tbody>
+          ${filtrados.sort((a,b) => b.data.localeCompare(a.data)).map(i => `
+            <tr>
+              <td>${formatarData(i.data)}</td>
+              <td style="color: ${i.tipo === 'Receita' ? '#3ecf8e' : '#f06466'}">${i.tipo}</td>
+              <td>${i.categoria}</td>
+              <td>${i.descricao || '-'}</td>
+              <td style="color: ${i.tipo === 'Receita' ? '#3ecf8e' : '#f06466'}">R$ ${i.valor.toFixed(2)}</td>
+              <td>${i.formaPagamento}</td>
+              <td>${i.necessidade}</td>
+              <td>${i.registro || '-'}</td>
+            </tr>
+          `).join('')}
+          ${filtrados.length === 0 ? '<tr><td colspan="8">Nenhum dado encontrado</td>' : ''}
+        </tbody>
+      </table>
+    `;
+  }
+}
+
+// ============================================
+// EXPORT
+// ============================================
+function exportarExcel() {
+  const dadosExport = dadosCompletos.map(i => ({
+    Data: formatarData(i.data), Tipo: i.tipo, Categoria: i.categoria,
+    Descricao: i.descricao, Valor: i.valor, FormaPagamento: i.formaPagamento,
+    Necessidade: i.necessidade, Registro: i.registro
+  }));
+  const ws = XLSX.utils.json_to_sheet(dadosExport);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Merkai_Finance');
+  XLSX.writeFile(wb, `Merkai_Finance_${new Date().toISOString().split('T')[0]}.xlsx`);
+  mostrarNotificacao('✅ Excel exportado!', '#3ecf8e');
+}
+
+function exportarCSV() {
+  const header = 'Data;Tipo;Categoria;Descricao;Valor;FormaPagamento;Necessidade;Registro\n';
+  const dadosExport = dadosCompletos.map(i => `${formatarData(i.data)};${i.tipo};${i.categoria};${i.descricao};${i.valor};${i.formaPagamento};${i.necessidade};${i.registro}`).join('\n');
+  const blob = new Blob([header + dadosExport], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `Merkai_Finance_${new Date().toISOString().split('T')[0]}.csv`;
+  link.click();
+  mostrarNotificacao('✅ CSV exportado!', '#5ba3f5');
+}
+
+function forcarAtualizacao() {
+  carregarDados();
+}
+
+function mostrarNotificacao(msg, cor = '#7c6af0') {
+  const notif = document.createElement('div');
+  notif.className = 'notification';
+  notif.style.background = cor;
+  notif.style.color = 'white';
+  notif.innerText = msg;
+  document.body.appendChild(notif);
+  setTimeout(() => notif.remove(), 2500);
+}
+
+function carregarExemplo() {
+  dadosCompletos = [
+    { data: '2024-01-15', tipo: 'Receita', categoria: 'Salário', descricao: 'Salário João', valor: 5000, formaPagamento: 'Débito', necessidade: 'Essencial', registro: 'João' },
+    { data: '2024-01-20', tipo: 'Despesa', categoria: 'Lazer', descricao: 'Cinema', valor: 50, formaPagamento: 'Pix', necessidade: 'Não Essencial', registro: 'Maria' },
+    { data: '2024-01-22', tipo: 'Despesa', categoria: 'Alimentação', descricao: 'Mercado', valor: 350, formaPagamento: 'Crédito', necessidade: 'Essencial', registro: 'João' },
+    { data: '2024-01-25', tipo: 'Despesa', categoria: 'Investimento', descricao: 'Ações', valor: 500, formaPagamento: 'Pix', necessidade: 'Investimento', registro: 'João' },
+    { data: '2024-02-01', tipo: 'Despesa', categoria: 'Investimento', descricao: 'FIIs', valor: 300, formaPagamento: 'Débito', necessidade: 'Investimento', registro: 'Carlos' }
+  ];
+  atualizarHome();
+  atualizarDashboard();
+  atualizarTabelaGeral();
+  mostrarNotificacao('📋 Dados de exemplo carregados', '#f0a946');
+}
+
+// Inicializar tema
+const toggleBtn = document.getElementById('themeToggle');
+if (toggleBtn) toggleBtn.innerHTML = document.documentElement.getAttribute('data-theme') === 'dark' ? '🌙' : '☀️';
+
+// Carregar dados automaticamente
+carregarDados();
+
+// Expor funções globalmente
+window.toggleTheme = toggleTheme;
+window.forcarAtualizacao = forcarAtualizacao;
+window.exportarExcel = exportarExcel;
+window.exportarCSV = exportarCSV;
+window.filtrarTabelaGeral = filtrarTabelaGeral;
+</script>
+</body>
+</html>
