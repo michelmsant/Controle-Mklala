@@ -1,964 +1,644 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>💰 Mërkai Finance</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Merkai Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding-top: 60px;
-        }
+/* ── Tokens dark ── */
+[data-theme="dark"] {
+  --bg:        #0f0f12;
+  --bg2:       #16161a;
+  --bg3:       #1e1e24;
+  --bg4:       #26262e;
+  --border:    rgba(255,255,255,0.08);
+  --border2:   rgba(255,255,255,0.14);
+  --text:      #f0eff4;
+  --text2:     #9896a6;
+  --text3:     #5c5b6a;
+  --shadow:    rgba(0,0,0,0.5);
+  --card-glow: rgba(124,106,240,0.18);
+  --shell-bg:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,106,240,0.14) 0%, transparent 70%);
+  --device-shadow: 0 0 0 1px rgba(0,0,0,0.5), 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  --login-glow: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(124,106,240,0.35) 0%, transparent 65%);
+}
 
-        /* Header Fixo */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 60px;
-            text-align: center;
-            z-index: 999;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+/* ── Tokens light ── */
+[data-theme="light"] {
+  --bg:        #f5f4f8;
+  --bg2:       #ffffff;
+  --bg3:       #f0eef6;
+  --bg4:       #e6e3f0;
+  --border:    rgba(0,0,0,0.07);
+  --border2:   rgba(0,0,0,0.12);
+  --text:      #1a1828;
+  --text2:     #6b6880;
+  --text3:     #a09eb0;
+  --shadow:    rgba(100,90,160,0.10);
+  --card-glow: rgba(124,106,240,0.08);
+  --shell-bg:  radial-gradient(ellipse 80% 60% at 50% 0%, rgba(124,106,240,0.07) 0%, transparent 70%);
+  --device-shadow: 0 0 0 1px rgba(124,106,240,0.12), 0 32px 60px rgba(100,90,160,0.18), inset 0 1px 0 rgba(255,255,255,0.8);
+  --login-glow: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(124,106,240,0.18) 0%, transparent 65%);
+}
 
-        .header h1 {
-            font-size: 1.2rem;
-        }
+/* ── Shared accent colors ── */
+:root {
+  --accent:     #7c6af0;
+  --accent2:    #9b8ff5;
+  --accent-bg:  rgba(124,106,240,0.12);
+  --green:      #3ecf8e;
+  --green-bg:   rgba(62,207,142,0.12);
+  --red:        #f06466;
+  --red-bg:     rgba(240,100,102,0.12);
+  --amber:      #f0a946;
+  --amber-bg:   rgba(240,169,70,0.12);
+  --blue:       #5ba3f5;
+  --blue-bg:    rgba(91,163,245,0.12);
+  --pink:       #e46db4;
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-lg:  20px;
+  --font-display: 'Syne', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
+  --tab-h:      68px;
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+}
 
-        .header p {
-            font-size: 0.7rem;
-            opacity: 0.9;
-        }
+html, body {
+  height: 100%; height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.3s, color 0.3s;
+}
 
-        .last-update {
-            font-size: 0.65rem;
-            margin-top: 4px;
-            opacity: 0.8;
-        }
+/* ── Shell ── */
+.shell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  background: var(--shell-bg);
+  transition: background 0.4s;
+}
+.device {
+  width: 390px; height: 844px;
+  background: var(--bg2);
+  border-radius: 44px;
+  border: 1.5px solid var(--border2);
+  overflow: hidden;
+  position: relative;
+  display: flex; flex-direction: column;
+  box-shadow: var(--device-shadow);
+  transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.notch {
+  position: absolute; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 126px; height: 34px;
+  background: var(--bg);
+  border-radius: 0 0 20px 20px;
+  z-index: 100;
+  transition: background 0.3s;
+}
 
-        /* Botão Hamburguer - Esquerda */
-        .hamburger-btn {
-            position: fixed;
-            top: 16px;
-            left: 16px;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            border: none;
-            font-size: 1.3rem;
-            transition: all 0.3s;
-        }
+@media (max-width: 500px) {
+  .shell { display: block; background: var(--bg2); }
+  .device { width: 100vw; height: 100dvh; border-radius: 0; border: none; box-shadow: none; }
+  .notch { display: none; }
+}
 
-        .hamburger-btn:hover {
-            background: #667eea;
-            color: white;
-        }
+/* ════════════════════════════════════════════
+   LOGIN SCREEN
+   ════════════════════════════════════════════ */
+#page-login {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--bg2);
+  transition: background 0.3s;
+  z-index: 500;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+#page-login::-webkit-scrollbar { display: none; }
 
-        /* Sidebar - Menu Lateral */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -280px;
-            width: 280px;
-            height: 100%;
-            background: white;
-            box-shadow: 2px 0 20px rgba(0,0,0,0.15);
-            transition: left 0.3s ease;
-            z-index: 1000;
-            padding-top: 70px;
-        }
+.login-hero {
+  flex-shrink: 0;
+  padding: calc(var(--sat) + 50px) 32px 36px;
+  text-align: center;
+  position: relative;
+}
+.login-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--login-glow);
+  pointer-events: none;
+}
+.login-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+.login-logo-icon {
+  width: 52px; height: 52px;
+  background: var(--accent);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 8px 24px rgba(124,106,240,0.4);
+}
+.login-logo-name {
+  font-family: var(--font-display);
+  font-size: 30px; font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text);
+}
+.login-tagline {
+  font-size: 13px;
+  color: var(--text3);
+  margin-top: -6px;
+}
 
-        .sidebar.open {
-            left: 0;
-        }
+.login-form {
+  padding: 0 24px calc(var(--sab) + 32px);
+  display: flex; flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+.login-field {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.login-field:focus-within {
+  border-color: var(--accent);
+}
+.login-field-icon { font-size: 18px; }
+.login-input {
+  flex: 1;
+  background: transparent; border: none; outline: none;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+}
+.login-input::placeholder { color: var(--text3); }
+.login-btn {
+  width: 100%; padding: 16px;
+  background: var(--accent);
+  border: none; border-radius: var(--radius);
+  font-family: var(--font-display); font-size: 16px; font-weight: 700;
+  color: white; cursor: pointer;
+  box-shadow: 0 8px 20px rgba(124,106,240,0.35);
+  transition: transform 0.15s;
+}
+.login-btn:active { transform: scale(0.97); }
+.login-error {
+  background: var(--red-bg);
+  border: 1px solid rgba(240,100,102,0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--red);
+  display: none;
+}
+.login-error.show { display: block; }
 
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            display: none;
-        }
+#page-login {
+  opacity: 1;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#page-login.exit {
+  opacity: 0;
+  transform: translateY(-24px);
+  pointer-events: none;
+}
 
-        .sidebar-overlay.open {
-            display: block;
-        }
+/* ════════════════════════════════════════════
+   APP SCREENS
+   ════════════════════════════════════════════ */
+.app-wrapper {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease 0.2s;
+}
+.app-wrapper.visible { opacity: 1; pointer-events: all; }
 
-        .sidebar-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-            font-size: 1rem;
-        }
+.screens { flex: 1; overflow: hidden; position: relative; padding-top: 44px; }
+@media (max-width: 500px) { .screens { padding-top: max(44px, var(--sat)); } }
 
-        .sidebar-item:hover {
-            background: #f0f0f0;
-        }
+.screen {
+  position: absolute; inset: 0;
+  overflow-y: auto; overflow-x: hidden;
+  padding-bottom: calc(var(--tab-h) + 16px + var(--sab));
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s ease;
+  scrollbar-width: none;
+}
+.screen::-webkit-scrollbar { display: none; }
+.screen.active { opacity: 1; pointer-events: all; }
 
-        .sidebar-item.active {
-            background: #e3f2fd;
-            border-left-color: #667eea;
-            color: #667eea;
-        }
+/* ── Top bar ── */
+.top-bar {
+  padding: 14px 20px 10px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 20;
+  background: linear-gradient(to bottom, var(--bg2) 80%, transparent);
+}
+.top-bar h1 { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.top-bar-right { display: flex; align-items: center; gap: 12px; }
+.theme-toggle {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px;
+}
+.refresh-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 16px;
+}
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--accent-bg); border: 1.5px solid var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--accent2);
+  cursor: pointer;
+}
 
-        .sidebar-item span:first-child {
-            font-size: 1.2rem;
-        }
+/* ── Tab bar ── */
+.tab-bar {
+  height: var(--tab-h); background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 8px calc(8px + var(--sab)); gap: 4px;
+  flex-shrink: 0;
+}
+@media (max-width: 500px) { .tab-bar { height: calc(var(--tab-h) + var(--sab)); } }
+.tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  cursor: pointer; padding: 8px 4px; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text3);
+  border: none;
+}
+.tab.active { color: var(--accent2); }
+.tab svg { width: 22px; height: 22px; }
+.tab span { font-size: 10px; font-weight: 500; }
 
-        /* Main Content */
-        .main-content {
-            padding: 16px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+/* ── Cards ── */
+.section { padding: 0 20px 20px; }
+.section-title {
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 12px; margin-top: 24px;
+}
+.positive { color: var(--green); }
+.negative { color: var(--red); }
 
-        .page {
-            display: none;
-        }
+.balance-card {
+  margin: 4px 20px 0; background: var(--bg3);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 20px; position: relative; overflow: hidden;
+}
+.balance-card::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: radial-gradient(circle, var(--card-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+.balance-label { font-size: 12px; color: var(--text3); text-transform: uppercase; margin-bottom: 6px; }
+.balance-value { font-family: var(--font-display); font-size: 36px; font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
+.balance-row { display: flex; gap: 12px; }
+.balance-item {
+  flex: 1; background: rgba(124,106,240,0.06); border-radius: var(--radius-sm); padding: 10px 12px;
+}
+.balance-item-label { font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+.balance-item-val { font-size: 14px; font-weight: 500; }
 
-        .page.active {
-            display: block;
-        }
+.rankings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px;
+}
 
-        /* Cards de Estatísticas */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+.ranking-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.ranking-card h3 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ranking-item:last-child { border-bottom: none; }
+.ranking-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ranking-position {
+  width: 24px; height: 24px;
+  background: var(--bg4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--text2);
+}
+.ranking-position.gold { background: #ffd700; color: #333; }
+.ranking-position.silver { background: #c0c0c0; color: #333; }
+.ranking-position.bronze { background: #cd7f32; color: white; }
+.ranking-value { font-weight: 600; color: var(--red); }
+.ranking-value.invest { color: var(--green); }
 
-        .stat-card {
-            background: white;
-            padding: 16px;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.2s;
-        }
+.tx-list { display: flex; flex-direction: column; gap: 2px; }
+.tx-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.tx-item:active { background: var(--bg3); }
+.tx-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  background: var(--accent-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.tx-info { flex: 1; min-width: 0; }
+.tx-name { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tx-cat { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.tx-amount { font-size: 14px; font-weight: 600; text-align: right; }
+.tx-date { font-size: 10px; color: var(--text3); text-align: right; margin-top: 2px; }
 
-        .stat-card:hover {
-            transform: translateY(-2px);
-        }
+/* Dashboard */
+.chart-container {
+  margin: 0 20px 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.chart-title {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+canvas { max-height: 180px; width: 100% !important; }
 
-        .stat-card h4 {
-            font-size: 0.7rem;
-            color: #666;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
+/* Tabela Geral */
+.export-buttons {
+  display: flex;
+  gap: 10px;
+  margin: 16px 20px;
+  justify-content: flex-end;
+}
+.btn-export {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+.btn-export.excel { background: var(--green); color: white; }
+.btn-export.csv { background: var(--blue); color: white; }
+.btn-refresh { background: var(--accent); color: white; }
 
-        .stat-card .value {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+.filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 20px 16px;
+}
+.filters select, .filters input {
+  padding: 8px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
 
-        .stat-card.income .value { color: #28a745; }
-        .stat-card.expense .value { color: #dc3545; }
-        .stat-card.balance .value { color: #667eea; }
-        .stat-card.investment .value { color: #ffc107; }
+.table-container {
+  margin: 0 20px 20px;
+  overflow-x: auto;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+th, td {
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  color: var(--text3);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
 
-        /* Cards de Ranking */
-        .rankings-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .ranking-card {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .ranking-card h3 {
-            font-size: 1rem;
-            margin-bottom: 16px;
-            color: #333;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 8px;
-        }
-
-        .ranking-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .ranking-item:last-child {
-            border-bottom: none;
-        }
-
-        .ranking-name {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ranking-position {
-            width: 28px;
-            height: 28px;
-            background: #667eea;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .ranking-position.gold { background: #ffd700; color: #333; }
-        .ranking-position.silver { background: #c0c0c0; color: #333; }
-        .ranking-position.bronze { background: #cd7f32; color: white; }
-
-        .ranking-value {
-            font-weight: bold;
-            color: #dc3545;
-        }
-
-        .ranking-value.invest {
-            color: #28a745;
-        }
-
-        /* Dashboard Grid */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .dashboard-card {
-            background: white;
-            padding: 16px;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .dashboard-card h3 {
-            font-size: 0.95rem;
-            margin-bottom: 16px;
-            color: #333;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 8px;
-        }
-
-        canvas {
-            max-height: 220px;
-            width: 100% !important;
-        }
-
-        /* Tabela */
-        .table-container {
-            overflow-x: auto;
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.7rem;
-        }
-
-        th, td {
-            padding: 10px 8px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background: #667eea;
-            color: white;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        td {
-            white-space: nowrap;
-        }
-
-        /* Botões */
-        .export-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 16px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-        }
-
-        .btn-export, .btn-refresh {
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: none;
-            transition: all 0.2s;
-        }
-
-        .btn-export {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-export.csv {
-            background: #17a2b8;
-        }
-
-        .btn-refresh {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-export:hover, .btn-refresh:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-
-        /* Filtros */
-        .filters {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-
-        .filters select, .filters input {
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            background: white;
-        }
-
-        /* Loading e Notificações */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background: #333;
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 1002;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* Responsividade */
-        @media (min-width: 768px) {
-            .stats-grid {
-                gap: 20px;
-            }
-            .stat-card .value {
-                font-size: 1.8rem;
-            }
-            .main-content {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .rankings-grid {
-                grid-template-columns: 1fr;
-            }
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 1rem;
-            }
-        }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text3);
+}
+.notification {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  right: 20px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text);
+  z-index: 200;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+</style>
 </head>
 <body>
-    <!-- Botão Hamburguer -->
-    <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+<div class="shell">
+  <div class="device">
+    <div class="notch"></div>
 
-    <!-- Header -->
-    <div class="header">
-        <h1>💰 Mërkai Finance</h1>
-        <p>Controle Financeiro Inteligente</p>
-        <div class="last-update" id="lastUpdate">Carregando...</div>
+    <!-- Login Screen -->
+    <div id="page-login">
+      <div class="login-hero">
+        <div class="login-logo">
+          <div class="login-logo-icon">💰</div>
+          <div class="login-logo-name">Merkai</div>
+        </div>
+        <div class="login-tagline">finanças que fazem sentido</div>
+      </div>
+      <div class="login-form">
+        <div class="login-error" id="loginError">Senha incorreta — tente “merkai”</div>
+        <div class="login-field">
+          <span class="login-field-icon">👤</span>
+          <input type="text" class="login-input" id="loginUser" placeholder="Usuário" value="admin">
+        </div>
+        <div class="login-field">
+          <span class="login-field-icon">🔒</span>
+          <input type="password" class="login-input" id="loginPass" placeholder="Senha" value="">
+        </div>
+        <button class="login-btn" id="loginBtn">Entrar</button>
+      </div>
     </div>
 
-    <!-- Sidebar -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMenu()"></div>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-item active" data-page="home" onclick="changePage('home')">
-            <span>🏠</span> <span>Home</span>
+    <!-- App Wrapper -->
+    <div class="app-wrapper" id="appWrapper">
+      <div class="screens">
+        <!-- HOME Screen -->
+        <div class="screen active" id="screen-home">
+          <div class="top-bar">
+            <h1>Olá,<br><span id="userNameDisplay">Visitante</span></h1>
+            <div class="top-bar-right">
+              <button class="theme-toggle" onclick="toggleTheme()" id="themeToggle">🌙</button>
+              <button class="refresh-btn" onclick="forcarAtualizacao()">🔄</button>
+              <div class="avatar" onclick="logout()">👤</div>
+            </div>
+          </div>
+          <div id="homeContent">
+            <div class="loading">Carregando...</div>
+          </div>
         </div>
-        <div class="sidebar-item" data-page="dashboard" onclick="changePage('dashboard')">
-            <span>📊</span> <span>Dashboard</span>
+
+        <!-- DASHBOARD Screen -->
+        <div class="screen" id="screen-dashboard">
+          <div class="top-bar">
+            <h1>Dashboard</h1>
+            <div class="top-bar-right">
+              <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+              <div class="avatar" onclick="logout()">👤</div>
+            </div>
+          </div>
+          <div id="dashboardContent">
+            <div class="loading">Carregando gráficos...</div>
+          </div>
         </div>
-        <div class="sidebar-item" data-page="geral" onclick="changePage('geral')">
-            <span>📋</span> <span>Geral</span>
+
+        <!-- GERAL Screen -->
+        <div class="screen" id="screen-geral">
+          <div class="top-bar">
+            <h1>Registros</h1>
+            <div class="top-bar-right">
+              <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+              <div class="avatar" onclick="logout()">👤</div>
+            </div>
+          </div>
+          <div id="geralContent">
+            <div class="loading">Carregando...</div>
+          </div>
         </div>
+      </div>
+
+      <!-- Tab Bar -->
+      <div class="tab-bar">
+        <button class="tab active" data-screen="home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5L12 3L21 9.5M5 10.5V20H19V10.5M12 17V14"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="tab" data-screen="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4H20V20H4V4Z M8 8H16V12H8V8Z M8 14H12V16H8V14Z"/></svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="tab" data-screen="geral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4H20V8H4V4Z M4 10H20V14H4V10Z M4 16H20V20H4V16Z"/></svg>
+          <span>Registros</span>
+        </button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Página Home -->
-        <div id="page-home" class="page active">
-            <div class="stats-grid" id="homeStats"></div>
-            
-            <div class="rankings-grid">
-                <!-- Ranking de Despesas -->
-                <div class="ranking-card">
-                    <h3>Despesas</h3>
-                    <div id="rankingDespesas"></div>
-                </div>
-                <!-- Ranking de Investimentos (usando Coluna J - Registro) -->
-                <div class="ranking-card">
-                    <h3>Investimentos</h3>
-                    <div id="rankingInvestimentos"></div>
-                </div>
-            </div>
+<script>
+// ============================================
+// CONFIGURAÇÕES
+// ============================================
+const PLANILHA_URL = "https://docs.google.com/spreadsheets/d/10rAYr6HVqSoI8doun6btTfLTvvu0uu2rPMoRBGYzO6Q/edit?usp=sharing";
+const PLANILHA_ID = PLANILHA_URL.match(/\/d\/([a-zA-Z0-9_-]+)/)[1];
 
-            <div class="dashboard-card">
-                <h3>📋 Últimos 10 Lançamentos</h3>
-                <div class="table-container" id="ultimosLancamentos"></div>
-            </div>
-        </div>
+let dadosCompletos = [];
+let carregando = false;
+let chartCategoria, chartDescricao, chartPagamento, chartNecessidade, chartDias;
 
-        <!-- Página Dashboard -->
-        <div id="page-dashboard" class="page">
-            <div class="dashboard-grid">
-                <div class="dashboard-card">
-                    <h3>📊 Despesas por Categoria</h3>
-                    <canvas id="chartCategoria"></canvas>
-                </div>
-                <div class="dashboard-card">
-                    <h3>🏷️ Despesas por Descrição</h3>
-                    <canvas id="chartDescricao"></canvas>
-                </div>
-                <div class="dashboard-card">
-                    <h3>💳 Formas de Pagamento</h3>
-                    <canvas id="chartPagamento"></canvas>
-                </div>
-                <div class="dashboard-card">
-                    <h3>⚠️ Índice de Necessidade</h3>
-                    <canvas id="chartNecessidade"></canvas>
-                </div>
-            </div>
-            <div class="dashboard-card">
-                <h3>📅 Dias com Mais Despesas</h3>
-                <canvas id="chartDias"></canvas>
-            </div>
-        </div>
+// ============================================
+// TEMA (Dark/Light)
+// ============================================
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const newTheme = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('merkai-theme', newTheme);
+  const toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn) toggleBtn.innerHTML = newTheme === 'dark' ? '🌙' : '☀️';
+}
+const savedTheme = localStorage.getItem('merkai-theme');
+if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 
-        <!-- Página Geral -->
-        <div id="page-geral" class="page">
-            <div class="export-buttons">
-                <button class="btn-export" onclick="exportarExcel()">📊 Exportar Excel</button>
-                <button class="btn-export csv" onclick="exportarCSV()">📄 Exportar CSV</button>
-                <button class="btn-refresh" onclick="forcarAtualizacao()">🔄 Atualizar</button>
-            </div>
-            <div class="filters">
-                <select id="filterCategoria" onchange="filtrarTabelaGeral()">
-                    <option value="">Todas Categorias</option>
-                </select>
-                <select id="filterTipo" onchange="filtrarTabelaGeral()">
-                    <option value="">Todos os Tipos</option>
-                    <option value="Receita">💰 Receitas</option>
-                    <option value="Despesa">💸 Despesas</option>
-                </select>
-                <input type="month" id="filterMes" onchange="filtrarTabelaGeral()">
-            </div>
-            <div class="table-container" id="tabelaGeral"></div>
-        </div>
-    </div>
+// ============================================
+// LOGIN
+// ============================================
+let isLoggedIn = false;
+const USERS = [{ username: 'admin', password: 'merkai', name: 'Família' }];
 
-    <script>
-        // CONFIGURAÇÕES
-        const PLANILHA_URL = "https://docs.google.com/spreadsheets/d/10rAYr6HVqSoI8doun6btTfLTvvu0uu2rPMoRBGYzO6Q/edit?usp=sharing";
-        const PLANILHA_ID = PLANILHA_URL.match(/\/d\/([a-zA-Z0-9_-]+)/)[1];
-        
-        let dadosCompletos = [];
-        let carregando = false;
-
-        let chartCategoria, chartDescricao, chartPagamento, chartNecessidade, chartDias;
-
-        // Funções do Menu
-        function toggleMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('open');
-        }
-
-        function changePage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(`page-${page}`).classList.add('active');
-            
-            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
-            document.querySelector(`.sidebar-item[data-page="${page}"]`).classList.add('active');
-            
-            if (window.innerWidth <= 768) toggleMenu();
-            
-            if (page === 'dashboard') atualizarDashboard();
-            if (page === 'geral') atualizarTabelaGeral();
-            if (page === 'home') atualizarHome();
-        }
-
-        // Carregar dados do Google Sheets
-        async function carregarDados() {
-            if (carregando) return;
-            carregando = true;
-            
-            try {
-                const url = `https://docs.google.com/spreadsheets/d/${PLANILHA_ID}/gviz/tq?tqx=out:json`;
-                const resposta = await fetch(url);
-                const texto = await resposta.text();
-                const jsonString = texto.substring(47, texto.length - 2);
-                const dados = JSON.parse(jsonString);
-                
-                if (dados.table && dados.table.rows) {
-                    const cabecalhos = dados.table.cols.map(col => col.label);
-                    const linhas = dados.table.rows.map(row => {
-                        const obj = {};
-                        row.c.forEach((celula, index) => {
-                            if (cabecalhos[index] && celula && celula.v !== null) {
-                                obj[cabecalhos[index]] = celula.v;
-                            }
-                        });
-                        return obj;
-                    }).filter(row => Object.keys(row).length > 0);
-                    
-                    processarDados(linhas);
-                    mostrarNotificacao('✅ Dados carregados!');
-                } else {
-                    throw new Error('Nenhum dado');
-                }
-            } catch (erro) {
-                console.error(erro);
-                mostrarNotificacao('❌ Erro ao carregar dados', '#dc3545');
-                carregarExemplo();
-            }
-            carregando = false;
-        }
-
-        function processarDados(dados) {
-            dadosCompletos = dados.map(linha => {
-                let data = '';
-                let tipo = 'Receita';
-                let categoria = 'Outros';
-                let descricao = '';
-                let valor = 0;
-                let formaPagamento = 'Outros';
-                let necessidade = 'Média';
-                let registro = ''; // Coluna J - Registro (investidor)
-                
-                Object.keys(linha).forEach(chave => {
-                    const chaveLower = chave.toLowerCase();
-                    const val = linha[chave];
-                    
-                    if (chaveLower === 'data' || chaveLower.includes('data') || chaveLower === 'carimbo de data/hora') {
-                        data = extrairData(val);
-                    }
-                    else if (chaveLower === 'tipo' || chaveLower.includes('tipo')) {
-                        tipo = String(val).toLowerCase().includes('despesa') ? 'Despesa' : 'Receita';
-                    }
-                    else if (chaveLower === 'categoria' || chaveLower.includes('categoria')) {
-                        categoria = val || 'Outros';
-                    }
-                    else if (chaveLower.includes('descrição') || chaveLower.includes('descricao')) {
-                        descricao = val || '';
-                    }
-                    else if (chaveLower === 'valor' || chaveLower.includes('valor')) {
-                        valor = typeof val === 'number' ? val : parseFloat(String(val).replace('R$', '').replace(/\./g, '').replace(',', '.')) || 0;
-                    }
-                    else if (chaveLower.includes('pagamento') || chaveLower === 'forma de pagamento') {
-                        formaPagamento = val || 'Outros';
-                    }
-                    else if (chaveLower === 'necessidade' || chaveLower.includes('necessidade')) {
-                        necessidade = val || 'Média';
-                    }
-                    else if (chaveLower === 'registro' || chaveLower.includes('registro')) {
-                        registro = val || 'Não informado';
-                    }
-                });
-                
-                return { data, tipo, categoria, descricao, valor, formaPagamento, necessidade, registro };
-            }).filter(item => item.valor > 0);
-            
-            atualizarHome();
-            atualizarDashboard();
-            atualizarTabelaGeral();
-            atualizarHora();
-        }
-
-        function extrairData(val) {
-            if (!val) return '';
-            if (typeof val === 'string') {
-                const match = val.match(/(\d{2})\/(\d{2})\/(\d{4})/);
-                if (match) return `${match[3]}-${match[2]}-${match[1]}`;
-                const d = new Date(val);
-                if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
-            }
-            if (typeof val === 'number') {
-                const d = new Date((val - 25569) * 86400000);
-                if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
-            }
-            return '';
-        }
-
-        function formatarData(dataStr) {
-            if (!dataStr) return '-';
-            try {
-                const d = new Date(dataStr);
-                if (!isNaN(d.getTime())) {
-                    return d.toLocaleDateString('pt-BR');
-                }
-            } catch(e) { 
-                return dataStr;
-            }
-            return dataStr;
-        }
-
-        // Atualizar Home
-        function atualizarHome() {
-            const receitas = dadosCompletos.filter(i => i.tipo === 'Receita').reduce((s, i) => s + i.valor, 0);
-            const despesas = dadosCompletos.filter(i => i.tipo === 'Despesa').reduce((s, i) => s + i.valor, 0);
-            const saldo = receitas - despesas;
-            
-            // Investimentos: despesas com categoria que contenha "Investimento" ou similar
-            const categoriasInvestimento = ['Investimento', 'Poupança', 'Ações', 'Previdência', 'FIIs', 'CDB', 'Tesouro'];
-            const investimentos = dadosCompletos.filter(i => i.tipo === 'Despesa' && categoriasInvestimento.some(cat => i.categoria.includes(cat))).reduce((s, i) => s + i.valor, 0);
-            
-            document.getElementById('homeStats').innerHTML = `
-                <div class="stat-card income"><h4>💰 Receitas</h4><div class="value">R$ ${receitas.toFixed(2)}</div></div>
-                <div class="stat-card expense"><h4>💸 Despesas</h4><div class="value">R$ ${despesas.toFixed(2)}</div></div>
-                <div class="stat-card balance"><h4>⚖️ Saldo</h4><div class="value">R$ ${saldo.toFixed(2)}</div></div>
-                <div class="stat-card investment"><h4>📈 Investimentos</h4><div class="value">R$ ${investimentos.toFixed(2)}</div></div>
-            `;
-            
-            // Ranking de Despesas por Registro (Coluna J)
-            const despesasPorRegistro = {};
-            dadosCompletos.filter(i => i.tipo === 'Despesa').forEach(i => {
-                const registro = i.registro || 'Não informado';
-                despesasPorRegistro[registro] = (despesasPorRegistro[registro] || 0) + i.valor;
-            });
-            const rankingDespesas = Object.entries(despesasPorRegistro).sort((a,b) => b[1] - a[1]).slice(0, 5);
-            
-            document.getElementById('rankingDespesas').innerHTML = rankingDespesas.map(([registro, valor], idx) => `
-                <div class="ranking-item">
-                    <div class="ranking-name">
-                        <div class="ranking-position ${idx === 0 ? 'gold' : idx === 1 ? 'silver' : idx === 2 ? 'bronze' : ''}">${idx + 1}</div>
-                        <span>${registro}</span>
-                    </div>
-                    <div class="ranking-value">R$ ${valor.toFixed(2)}</div>
-                </div>
-            `).join('') || '<div class="ranking-item">Nenhum dado disponível</div>';
-            
-            // Ranking de Investimentos por Registro (Coluna J)
-            const investimentosPorRegistro = {};
-            dadosCompletos.filter(i => i.tipo === 'Despesa' && categoriasInvestimento.some(cat => i.categoria.includes(cat))).forEach(i => {
-                const registro = i.registro || 'Não informado';
-                investimentosPorRegistro[registro] = (investimentosPorRegistro[registro] || 0) + i.valor;
-            });
-            
-            const rankingInvestimentos = Object.entries(investimentosPorRegistro).sort((a,b) => b[1] - a[1]).slice(0, 5);
-            
-            document.getElementById('rankingInvestimentos').innerHTML = rankingInvestimentos.map(([registro, valor], idx) => `
-                <div class="ranking-item">
-                    <div class="ranking-name">
-                        <div class="ranking-position ${idx === 0 ? 'gold' : idx === 1 ? 'silver' : idx === 2 ? 'bronze' : ''}">${idx + 1}</div>
-                        <span>${registro}</span>
-                    </div>
-                    <div class="ranking-value invest">R$ ${valor.toFixed(2)}</div>
-                </div>
-            `).join('') || '<div class="ranking-item">Nenhum investimento registrado</div>';
-            
-            // Últimos 10 lançamentos
-            const ultimos = [...dadosCompletos].sort((a,b) => b.data.localeCompare(a.data)).slice(0, 10);
-            document.getElementById('ultimosLancamentos').innerHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Tipo</th>
-                            <th>Categoria</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Registro</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${ultimos.map(i => `
-                            <tr>
-                                <td>${formatarData(i.data)}</td>
-                                <td style="color: ${i.tipo === 'Receita' ? '#28a745' : '#dc3545'}">${i.tipo}</td>
-                                <td>${i.categoria}</td>
-                                <td>${i.descricao || '-'}</td>
-                                <td style="color: ${i.tipo === 'Receita' ? '#28a745' : '#dc3545'}">R$ ${i.valor.toFixed(2)}</td>
-                                <td>${i.registro || '-'}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-        }
-
-        // Atualizar Dashboard
-        function atualizarDashboard() {
-            const despesas = dadosCompletos.filter(i => i.tipo === 'Despesa');
-            
-            // Despesas por Categoria
-            const porCategoria = {};
-            despesas.forEach(i => { porCategoria[i.categoria] = (porCategoria[i.categoria] || 0) + i.valor; });
-            const catLabels = Object.keys(porCategoria);
-            const catValues = Object.values(porCategoria);
-            if (chartCategoria) chartCategoria.destroy();
-            const ctx1 = document.getElementById('chartCategoria');
-            if (ctx1) {
-                chartCategoria = new Chart(ctx1, {
-                    type: 'pie',
-                    data: { labels: catLabels, datasets: [{ data: catValues, backgroundColor: ['#FF6384','#36A2EB','#FFCE56','#4BC0C0','#9966FF','#FF9F40','#C9CBCF'] }] },
-                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
-                });
-            }
-            
-            // Despesas por Descrição
-            const porDescricao = {};
-            despesas.forEach(i => { porDescricao[i.descricao || 'Sem descrição'] = (porDescricao[i.descricao || 'Sem descrição'] || 0) + i.valor; });
-            const descSorted = Object.entries(porDescricao).sort((a,b) => b[1] - a[1]).slice(0, 5);
-            if (chartDescricao) chartDescricao.destroy();
-            const ctx2 = document.getElementById('chartDescricao');
-            if (ctx2) {
-                chartDescricao = new Chart(ctx2, {
-                    type: 'pie',
-                    data: { labels: descSorted.map(d => d[0]), datasets: [{ data: descSorted.map(d => d[1]), backgroundColor: ['#FF9F40','#FF6384','#36A2EB','#FFCE56','#4BC0C0'] }] },
-                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
-                });
-            }
-            
-            // Formas de Pagamento
-            const porPagamento = {};
-            dadosCompletos.forEach(i => { porPagamento[i.formaPagamento] = (porPagamento[i.formaPagamento] || 0) + i.valor; });
-            if (chartPagamento) chartPagamento.destroy();
-            const ctx3 = document.getElementById('chartPagamento');
-            if (ctx3) {
-                chartPagamento = new Chart(ctx3, {
-                    type: 'doughnut',
-                    data: { labels: Object.keys(porPagamento), datasets: [{ data: Object.values(porPagamento), backgroundColor: ['#4BC0C0','#FF9F40','#FF6384','#36A2EB','#9966FF'] }] },
-                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
-                });
-            }
-            
-            // Índice de Necessidade
-            const porNecessidade = {};
-            despesas.forEach(i => { porNecessidade[i.necessidade] = (porNecessidade[i.necessidade] || 0) + i.valor; });
-            if (chartNecessidade) chartNecessidade.destroy();
-            const ctx4 = document.getElementById('chartNecessidade');
-            if (ctx4) {
-                chartNecessidade = new Chart(ctx4, {
-                    type: 'bar',
-                    data: { labels: Object.keys(porNecessidade), datasets: [{ data: Object.values(porNecessidade), backgroundColor: '#667eea' }] },
-                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-                });
-            }
-            
-            // Dias com mais despesas
-            const porDia = {};
-            despesas.forEach(i => { 
-                if (i.data) {
-                    const dia = formatarData(i.data);
-                    porDia[dia] = (porDia[dia] || 0) + i.valor;
-                }
-            });
-            const diasSorted = Object.entries(porDia).sort((a,b) => b[1] - a[1]).slice(0, 7);
-            if (chartDias) chartDias.destroy();
-            const ctx5 = document.getElementById('chartDias');
-            if (ctx5) {
-                chartDias = new Chart(ctx5, {
-                    type: 'bar',
-                    data: { labels: diasSorted.map(d => d[0]), datasets: [{ data: diasSorted.map(d => d[1]), backgroundColor: '#ffc107' }] },
-                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-                });
-            }
-        }
-
-        // Tabela Geral
-        function atualizarTabelaGeral() {
-            filtrarTabelaGeral();
-        }
-
-        function filtrarTabelaGeral() {
-            const cat = document.getElementById('filterCategoria').value;
-            const tipo = document.getElementById('filterTipo').value;
-            const mes = document.getElementById('filterMes').value;
-            
-            let filtrados = [...dadosCompletos];
-            if (cat) filtrados = filtrados.filter(i => i.categoria === cat);
-            if (tipo) filtrados = filtrados.filter(i => i.tipo === tipo);
-            if (mes) filtrados = filtrados.filter(i => i.data && i.data.substring(0, 7) === mes);
-            
-            document.getElementById('tabelaGeral').innerHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Tipo</th>
-                            <th>Categoria</th>
-                            <th>Descrição</th>
-                            <th>Valor</th>
-                            <th>Pagamento</th>
-                            <th>Necessidade</th>
-                            <th>Registro</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filtrados.sort((a,b) => b.data.localeCompare(a.data)).map(i => `
-                            <tr>
-                                <td>${formatarData(i.data)}</td>
-                                <td style="color: ${i.tipo === 'Receita' ? '#28a745' : '#dc3545'}">${i.tipo}</td>
-                                <td>${i.categoria}</td>
-                                <td>${i.descricao || '-'}</td>
-                                <td style="color: ${i.tipo === 'Receita' ? '#28a745' : '#dc3545'}">R$ ${i.valor.toFixed(2)}</td>
-                                <td>${i.formaPagamento}</td>
-                                <td>${i.necessidade}</td>
-                                <td>${i.registro || '-'}</td>
-                            </tr>
-                        `).join('')}
-                        ${filtrados.length === 0 ? '<tr><td colspan="8">Nenhum dado encontrado</td></tr>' : ''}
-                    </tbody>
-                </table>
-            `;
-            
-            // Atualizar filtros de categoria
-            const categorias = [...new Set(dadosCompletos.map(i => i.categoria))];
-            const selectCat = document.getElementById('filterCategoria');
-            const atualCat = selectCat.value;
-            selectCat.innerHTML = '<option value="">Todas Categorias</option>' + categorias.sort().map(c => `<option value="${c}" ${c === atualCat ? 'selected' : ''}>${c}</option>`).join('');
-        }
-
-        // Exportar
-        function exportarExcel() {
-            const dadosExport = dadosCompletos.map(i => ({
-                Data: formatarData(i.data),
-                Tipo: i.tipo,
-                Categoria: i.categoria,
-                Descricao: i.descricao,
-                Valor: i.valor,
-                FormaPagamento: i.formaPagamento,
-                Necessidade: i.necessidade,
-                Registro: i.registro
-            }));
-            const ws = XLSX.utils.json_to_sheet(dadosExport);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Financeiro');
-            XLSX.writeFile(wb, `Merkai_Finance_${new Date().toISOString().split('T')[0]}.xlsx`);
-            mostrarNotificacao('✅ Excel exportado!');
-        }
-
-        function exportarCSV() {
-            const header = 'Data;Tipo;Categoria;Descricao;Valor;FormaPagamento;Necessidade;Registro\n';
-            const dadosExport = dadosCompletos.map(i => 
-                `${formatarData(i.data)};${i.tipo};${i.categoria};${i.descricao};${i.valor};${i.formaPagamento};${i.necessidade};${i.registro}`
-            ).join('\n');
-            const blob = new Blob([header + dadosExport], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `Merkai_Finance_${new Date().toISOString().split('T')[0]}.csv`;
-            link.click();
-            mostrarNotificacao('✅ CSV exportado!');
-        }
-
-        function forcarAtualizacao() {
-            mostrarNotificacao('🔄 Atualizando dados...', '#007bff');
-            carregarDados();
-        }
-
-        function mostrarNotificacao(msg, cor = '#28a745') {
-            const notif = document.createElement('div');
-            notif.className = 'notification';
-            notif.style.background = cor;
-            notif.textContent = msg;
-            document.body.appendChild(notif);
-            setTimeout(() => notif.remove(), 2500);
-        }
-
-        function atualizarHora() {
-            document.getElementById('lastUpdate').innerHTML = `📅 Última atualização: ${new Date().toLocaleString('pt-BR')}`;
-        }
-
-        function carregarExemplo() {
-            dadosCompletos = [
-                { data: '2024-01-15', tipo: 'Receita', categoria: 'Salário', descricao: 'Salário', valor: 5000, formaPagamento: 'Débito', necessidade: 'Essencial', registro: 'João' },
-                { data: '2024-01-20', tipo: 'Despesa', categoria: 'Lazer', descricao: 'Cinema', valor: 50, formaPagamento: 'Pix', necessidade: 'Não Essencial', registro: 'Maria' },
-                { data: '2024-01-22', tipo: 'Despesa', categoria: 'Alimentação', descricao: 'Mercado', valor: 350, formaPagamento: 'Crédito', necessidade: 'Essencial', registro: 'João' },
-                { data: '2024-01-25', tipo: 'Despesa', categoria: 'Saúde', descricao: 'Consulta', valor: 200, formaPagamento: 'Débito', necessidade: 'Essencial', registro: 'Maria' },
-                { data: '2024-01-28', tipo: 'Despesa', categoria: 'Investimento', descricao: 'Ações', valor: 500, formaPagamento: 'Pix', necessidade: 'Investimento', registro: 'João' },
-                { data: '2024-02-01', tipo: 'Despesa', categoria: 'Investimento', descricao: 'FIIs', valor: 300, formaPagamento: 'Débito', necessidade: 'Investimento', registro: 'Carlos' }
-            ];
-            atualizarHome();
-            atualizarDashboard();
-            atualizarTabelaGeral();
-            mostrarNotificacao('📋 Dados de exemplo', '#ffc107');
-        }
-
-        // Expor funções globalmente
-        window.toggleMenu = toggleMenu;
-        window.changePage = changePage;
-        window.filtrarTabelaGeral = filtrarTabelaGeral;
-        window.exportarExcel = exportarExcel;
-        window.exportarCSV = exportarCSV;
-        window.forcarAtualizacao = forcarAtualizacao;
-        
-        // Iniciar
-        carregarDados();
-    </script>
-</body>
-</html>
+function doLogin() {
+  const user = document.getElementById('loginUser').value;
+  const pass = document.getElementById('loginPass').value;
+  const found = USERS.find(u => u.username === user && u.password === pass);
+  const errorDiv = document.getElementById('loginError');
+  
+  if (found) {
+    errorDiv.classList.remove('show');
+    isLoggedIn = true;
+    document.getElementById('userNameDisplay').innerText = found.name;
+    docu
