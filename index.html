@@ -218,6 +218,12 @@ html, body {
   display: none;
 }
 .login-error.show { display: block; }
+.login-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 8px;
+}
 
 #page-login {
   opacity: 1;
@@ -520,7 +526,7 @@ th {
         <div class="login-tagline">finanças que fazem sentido</div>
       </div>
       <div class="login-form">
-        <div class="login-error" id="loginError">Senha incorreta — tente “merkai”</div>
+        <div class="login-error" id="loginError">❌ Usuário ou senha incorretos</div>
         <div class="login-field">
           <span class="login-field-icon">👤</span>
           <input type="text" class="login-input" id="loginUser" placeholder="Usuário" value="admin">
@@ -530,6 +536,9 @@ th {
           <input type="password" class="login-input" id="loginPass" placeholder="Senha" value="">
         </div>
         <button class="login-btn" id="loginBtn">Entrar</button>
+        <div class="login-hint">
+          🔑 Dica: usuário <strong>admin</strong> | senha <strong>merkai</strong>
+        </div>
       </div>
     </div>
 
@@ -626,19 +635,14 @@ const savedTheme = localStorage.getItem('merkai-theme');
 if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 
 // ============================================
-// LOGIN
+// LOGIN - CORRIGIDO!
 // ============================================
 let isLoggedIn = false;
-const USERS = [{ username: 'admin', password: 'merkai', name: 'Família' }];
 
 function doLogin() {
   const user = document.getElementById('loginUser').value;
   const pass = document.getElementById('loginPass').value;
-  const found = USERS.find(u => u.username === user && u.password === pass);
   const errorDiv = document.getElementById('loginError');
   
-  if (found) {
-    errorDiv.classList.remove('show');
-    isLoggedIn = true;
-    document.getElementById('userNameDisplay').innerText = found.name;
-    docu
+  // Credenciais corretas
+  if (user === 'admin' && pass === 'merkai')
