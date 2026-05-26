@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Analítico - FinanSync</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="menu-overlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>FinanSync</span>
+            </div>
+            <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="dashboard.html" class="nav-item active"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+            <a href="geral.html" class="nav-item"><i class="fas fa-table"></i><span>Geral</span></a>
+            <div class="nav-divider"></div>
+            <button class="nav-item theme-toggle" id="sidebarThemeToggle"><i class="fas fa-moon"></i><span>Tema Escuro</span></button>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="status"><i class="fas fa-sync-alt"></i><span>Atualizando...</span></div>
+        </div>
+    </aside>
+    
+    <main class="main-content">
+        <header class="top-bar">
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <div class="top-bar-actions">
+                <button class="btn-icon theme-toggle-mobile" id="mobileThemeToggle"><i class="fas fa-moon"></i></button>
+                <button class="btn-primary" id="refreshData"><i class="fas fa-sync-alt"></i><span>Atualizar</span></button>
+            </div>
+        </header>
+        
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="shimmer-card"><div class="shimmer-line"></div><div class="shimmer-line"></div><div class="shimmer-line"></div></div>
+        </div>
+        
+        <div class="content-wrapper">
+            <h1 class="page-title">Dashboard Analítico</h1>
+            
+            <!-- Dashboard Filters -->
+            <div class="filters-bar">
+                <select id="filterCategory" class="filter-select">
+                    <option value="">Todas Categorias</option>
+                </select>
+                <select id="filterType" class="filter-select">
+                    <option value="">Todos Tipos</option>
+                    <option value="Receita">Receita</option>
+                    <option value="Despesa">Despesa</option>
+                    <option value="Investimento">Investimento</option>
+                </select>
+                <select id="filterNecessity" class="filter-select">
+                    <option value="">Todas Necessidades</option>
+                </select>
+                <input type="month" id="filterMonth" class="filter-date">
+            </div>
+            
+            <!-- Dashboard Charts Grid -->
+            <div class="dashboard-grid">
+                <div class="chart-card large">
+                    <div class="chart-header">
+                        <h3>Despesas por Categoria</h3>
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <canvas id="expensesByCategoryChart"></canvas>
+                </div>
+                
+                <div class="chart-card large">
+                    <div class="chart-header">
+                        <h3>Despesas por Descrição</h3>
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <canvas id="expensesByDescriptionChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Formas de Pagamento</h3>
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <canvas id="paymentMethodsChart"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Índice de Necessidade</h3>
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <canvas id="necessityIndexChart"></canvas>
+                </div>
+                
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <h3>Evolução Financeira Mensal</h3>
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <canvas id="monthlyEvolutionChart"></canvas>
+                </div>
+                
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <h3>Dias com Mais Despesas</h3>
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <canvas id="dailyExpensesChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Extra Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <i class="fas fa-chart-line"></i>
+                    <div class="metric-info">
+                        <span class="metric-label">Ticket Médio</span>
+                        <span class="metric-value" id="avgTicket">R$ 0,00</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-percent"></i>
+                    <div class="metric-info">
+                        <span class="metric-label">% Investimentos</span>
+                        <span class="metric-value" id="investmentPercent">0%</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-chart-simple"></i>
+                    <div class="metric-info">
+                        <span class="metric-label">Média Diária Gastos</span>
+                        <span class="metric-value" id="dailyAvgExpense">R$ 0,00</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <i class="fas fa-bullseye"></i>
+                    <div class="metric-info">
+                        <span class="metric-label">Meta Economia</span>
+                        <span class="metric-value" id="savingsGoal">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/filters.js"></script>
+    <script>
+        // Dashboard specific initialization
+        let dashboardCharts = {};
+        
+        async function loadDashboardData() {
+            const category = document.getElementById('filterCategory')?.value || '';
+            const type = document.getElementById('filterType')?.value || '';
+            const necessity = document.getElementById('filterNecessity')?.value || '';
+            const month = document.getElementById('filterMonth')?.value || '';
+            
+            let filteredData = window.financialData || [];
+            
+            if (category) filteredData = filteredData.filter(d => d.categoria === category);
+            if (type) filteredData = filteredData.filter(d => d.tipo === type);
+            if (necessity) filteredData = filteredData.filter(d => d.necessidade === necessity);
+            if (month) filteredData = filteredData.filter(d => d.data && d.data.startsWith(month));
+            
+            updateDashboardCharts(filteredData);
+            updateMetrics(filteredData);
+        }
+        
+        function updateDashboardCharts(data) {
+            // Despesas por Categoria
+            const expensesByCat = {};
+            data.filter(d => d.tipo === 'Despesa').forEach(d => {
+                expensesByCat[d.categoria] = (expensesByCat[d.categoria] || 0) + d.valor;
+            });
+            
+            if (dashboardCharts.expensesByCategory) dashboardCharts.expensesByCategory.destroy();
+            const catCtx = document.getElementById('expensesByCategoryChart').getContext('2d');
+            dashboardCharts.expensesByCategory = new Chart(catCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(expensesByCat),
+                    datasets: [{
+                        data: Object.values(expensesByCat),
+                        backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+            });
+            
+            // Despesas por Descrição
+            const expensesByDesc = {};
+            data.filter(d => d.tipo === 'Despesa').forEach(d => {
+                if (d.descricao) expensesByDesc[d.descricao] = (expensesByDesc[d.descricao] || 0) + d.valor;
+            });
+            const sortedDesc = Object.entries(expensesByDesc).sort((a,b) => b[1] - a[1]).slice(0, 10);
+            
+            if (dashboardCharts.expensesByDescription) dashboardCharts.expensesByDescription.destroy();
+            const descCtx = document.getElementById('expensesByDescriptionChart').getContext('2d');
+            dashboardCharts.expensesByDescription = new Chart(descCtx, {
+                type: 'bar',
+                data: {
+                    labels: sortedDesc.map(d => d[0]),
+                    datasets: [{
+                        label: 'Valor (R$)',
+                        data: sortedDesc.map(d => d[1]),
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 8
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+            });
+            
+            // Formas de Pagamento
+            const paymentMethods = {};
+            data.forEach(d => {
+                if (d.formaPagamento) paymentMethods[d.formaPagamento] = (paymentMethods[d.formaPagamento] || 0) + d.valor;
+            });
+            
+            if (dashboardCharts.paymentMethods) dashboardCharts.paymentMethods.destroy();
+            const payCtx = document.getElementById('paymentMethodsChart').getContext('2d');
+            dashboardCharts.paymentMethods = new Chart(payCtx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(paymentMethods),
+                    datasets: [{
+                        data: Object.values(paymentMethods),
+                        backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            });
+            
+            // Índice de Necessidade
+            const necessityIndex = {};
+            data.forEach(d => {
+                if (d.necessidade) necessityIndex[d.necessidade] = (necessityIndex[d.necessidade] || 0) + d.valor;
+            });
+            
+            if (dashboardCharts.necessityIndex) dashboardCharts.necessityIndex.destroy();
+            const necCtx = document.getElementById('necessityIndexChart').getContext('2d');
+            dashboardCharts.necessityIndex = new Chart(necCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(necessityIndex),
+                    datasets: [{
+                        data: Object.values(necessityIndex),
+                        backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#3b82f6']
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            });
+            
+            // Evolução Mensal
+            const monthlyData = {};
+            data.forEach(d => {
+                if (d.data && d.data.length >= 7) {
+                    const month = d.data.substring(0, 7);
+                    if (!monthlyData[month]) monthlyData[month] = { receita: 0, despesa: 0 };
+                    if (d.tipo === 'Receita') monthlyData[month].receita += d.valor;
+                    if (d.tipo === 'Despesa') monthlyData[month].despesa += d.valor;
+                }
+            });
+            
+            const months = Object.keys(monthlyData).sort();
+            if (dashboardCharts.monthlyEvolution) dashboardCharts.monthlyEvolution.destroy();
+            const evoCtx = document.getElementById('monthlyEvolutionChart').getContext('2d');
+            dashboardCharts.monthlyEvolution = new Chart(evoCtx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        { label: 'Receitas', data: months.map(m => monthlyData[m].receita), borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', tension: 0.4, fill: true },
+                        { label: 'Despesas', data: months.map(m => monthlyData[m].despesa), borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,0.1)', tension: 0.4, fill: true }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { tooltip: { callbacks: { label: (ctx) => `R$ ${ctx.raw.toFixed(2)}` } } } }
+            });
+            
+            // Dias com Mais Despesas
+            const dailyExpenses = {};
+            data.filter(d => d.tipo === 'Despesa').forEach(d => {
+                if (d.data) dailyExpenses[d.data] = (dailyExpenses[d.data] || 0) + d.valor;
+            });
+            const sortedDays = Object.entries(dailyExpenses).sort((a,b) => new Date(a[0]) - new Date(b[0])).slice(-30);
+            
+            if (dashboardCharts.dailyExpenses) dashboardCharts.dailyExpenses.destroy();
+            const dayCtx = document.getElementById('dailyExpensesChart').getContext('2d');
+            dashboardCharts.dailyExpenses = new Chart(dayCtx, {
+                type: 'line',
+                data: {
+                    labels: sortedDays.map(d => d[0]),
+                    datasets: [{
+                        label: 'Despesas (R$)',
+                        data: sortedDays.map(d => d[1]),
+                        borderColor: '#ef4444',
+                        backgroundColor: 'rgba(239,68,68,0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: true }
+            });
+        }
+        
+        function updateMetrics(data) {
+            const expenses = data.filter(d => d.tipo === 'Despesa');
+            const investments = data.filter(d => d.tipo === 'Investimento');
+            const totalExpenses = expenses.reduce((sum, d) => sum + d.valor, 0);
+            const totalInvestments = investments.reduce((sum, d) => sum + d.valor, 0);
+            const totalAll = data.reduce((sum, d) => sum + d.valor, 0);
+            
+            document.getElementById('avgTicket').innerText = `R$ ${(totalExpenses / (expenses.length || 1)).toFixed(2)}`;
+            document.getElementById('investmentPercent').innerText = totalAll > 0 ? `${((totalInvestments / totalAll) * 100).toFixed(1)}%` : '0%';
+            document.getElementById('dailyAvgExpense').innerText = `R$ ${(totalExpenses / 30).toFixed(2)}`;
+            
+            const revenue = data.filter(d => d.tipo === 'Receita').reduce((sum, d) => sum + d.valor, 0);
+            const savingsGoal = revenue > 0 ? ((revenue - totalExpenses) / revenue * 100).toFixed(1) : 0;
+            document.getElementById('savingsGoal').innerText = `${savingsGoal > 0 ? savingsGoal : 0}%`;
+        }
+        
+        // Update filters dropdowns
+        function updateFilterOptions() {
+            if (!window.financialData) return;
+            const categories = [...new Set(window.financialData.map(d => d.categoria).filter(Boolean))];
+            const necessities = [...new Set(window.financialData.map(d => d.necessidade).filter(Boolean))];
+            
+            const catSelect = document.getElementById('filterCategory');
+            const necSelect = document.getElementById('filterNecessity');
+            if (catSelect) {
+                catSelect.innerHTML = '<option value="">Todas Categorias</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+            }
+            if (necSelect) {
+                necSelect.innerHTML = '<option value="">Todas Necessidades</option>' + necessities.map(n => `<option value="${n}">${n}</option>`).join('');
+            }
+        }
+        
+        // Event listeners
+        if (document.getElementById('filterCategory')) {
+            document.getElementById('filterCategory').addEventListener('change', loadDashboardData);
+            document.getElementById('filterType').addEventListener('change', loadDashboardData);
+            document.getElementById('filterNecessity').addEventListener('change', loadDashboardData);
+            document.getElementById('filterMonth').addEventListener('change', loadDashboardData);
+        }
+        
+        // Expose for refresh
+        window.loadDashboardData = loadDashboardData;
+        window.updateFilterOptions = updateFilterOptions;
+    </script>
+    <script src="js/app.js"></script>
+</body>
+</html>

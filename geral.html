@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geral - FinanSync</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="menu-overlay"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><i class="fas fa-chart-line"></i><span>FinanSync</span></div>
+            <button class="close-menu" id="closeMenu"><i class="fas fa-times"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="dashboard.html" class="nav-item"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a>
+            <a href="geral.html" class="nav-item active"><i class="fas fa-table"></i><span>Geral</span></a>
+            <div class="nav-divider"></div>
+            <button class="nav-item theme-toggle" id="sidebarThemeToggle"><i class="fas fa-moon"></i><span>Tema Escuro</span></button>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="status"><i class="fas fa-sync-alt"></i><span>Atualizando...</span></div>
+        </div>
+    </aside>
+    
+    <main class="main-content">
+        <header class="top-bar">
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <div class="top-bar-actions">
+                <button class="btn-icon theme-toggle-mobile" id="mobileThemeToggle"><i class="fas fa-moon"></i></button>
+                <button class="btn-primary" id="refreshData"><i class="fas fa-sync-alt"></i><span>Atualizar</span></button>
+            </div>
+        </header>
+        
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="shimmer-card"><div class="shimmer-line"></div><div class="shimmer-line"></div><div class="shimmer-line"></div></div>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h1 class="page-title">Registro Geral</h1>
+                <div class="export-buttons">
+                    <button class="btn-export" id="exportExcel"><i class="fas fa-file-excel"></i> Excel</button>
+                    <button class="btn-export" id="exportCSV"><i class="fas fa-file-csv"></i> CSV</button>
+                    <button class="btn-export" id="exportPDF"><i class="fas fa-file-pdf"></i> PDF</button>
+                </div>
+            </div>
+            
+            <!-- Advanced Filters -->
+            <div class="filters-panel">
+                <div class="filter-group">
+                    <i class="fas fa-calendar"></i>
+                    <input type="date" id="filterStartDate" placeholder="Data inicial">
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-calendar"></i>
+                    <input type="date" id="filterEndDate" placeholder="Data final">
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-tag"></i>
+                    <select id="filterCategoryGeneral">
+                        <option value="">Todas Categorias</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-chart-simple"></i>
+                    <select id="filterTypeGeneral">
+                        <option value="">Todos Tipos</option>
+                        <option value="Receita">Receita</option>
+                        <option value="Despesa">Despesa</option>
+                        <option value="Investimento">Investimento</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-user"></i>
+                    <select id="filterRegistroGeneral">
+                        <option value="">Todos Registros</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <i class="fas fa-heart"></i>
+                    <select id="filterNecessityGeneral">
+                        <option value="">Todas Necessidades</option>
+                    </select>
+                </div>
+                <button class="btn-clear-filters" id="clearFilters"><i class="fas fa-times"></i> Limpar</button>
+            </div>
+            
+            <!-- Summary Bar -->
+            <div class="summary-bar">
+                <div class="summary-item">
+                    <span>Total de Registros:</span>
+                    <strong id="totalRecords">0</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Soma Total:</span>
+                    <strong id="totalSum">R$ 0,00</strong>
+                </div>
+            </div>
+            
+            <!-- Full Table -->
+            <div class="table-card">
+                <div class="table-responsive">
+                    <table class="full-table" id="fullTable">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Categoria</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Forma de Pagamento</th>
+                                <th>Parcelamento</th>
+                                <th>Necessidade</th>
+                                <th>Planejamento</th>
+                                <th>Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fullTableBody">
+                            <tr><td colspan="10" class="loading-row">Carregando dados...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/export.js"></script>
+    <script>
+        // General page logic
+        function updateGeneralTable() {
+            if (!window.financialData) return;
+            
+            let filtered = [...window.financialData];
+            const startDate = document.getElementById('filterStartDate')?.value;
+            const endDate = document.getElementById('filterEndDate')?.value;
+            const category = document.getElementById('filterCategoryGeneral')?.value;
+            const type = document.getElementById('filterTypeGeneral')?.value;
+            const registro = document.getElementById('filterRegistroGeneral')?.value;
+            const necessity = document.getElementById('filterNecessityGeneral')?.value;
+            
+            if (startDate) filtered = filtered.filter(d => d.data >= startDate);
+            if (endDate) filtered = filtered.filter(d => d.data <= endDate);
+            if (category) filtered = filtered.filter(d => d.categoria === category);
+            if (type) filtered = filtered.filter(d => d.tipo === type);
+            if (registro) filtered = filtered.filter(d => d.registro === registro);
+            if (necessity) filtered = filtered.filter(d => d.necessidade === necessity);
+            
+            document.getElementById('totalRecords').innerText = filtered.length;
+            const total = filtered.reduce((sum, d) => sum + d.valor, 0);
+            document.getElementById('totalSum').innerText = `R$ ${total.toFixed(2)}`;
+            
+            const tbody = document.getElementById('fullTableBody');
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="10" class="empty-row">Nenhum registro encontrado</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filtered.map(d => `
+                <tr>
+                    <td>${d.data || '-'}</td>
+                    <td><span class="badge ${d.tipo === 'Receita' ? 'badge-success' : d.tipo === 'Despesa' ? 'badge-danger' : 'badge-info'}">${d.tipo || '-'}</span></td>
+                    <td>${d.categoria || '-'}</td>
+                    <td>${d.descricao || '-'}</td>
+                    <td class="valor">${d.tipo === 'Despesa' ? '- ' : '+ '}R$ ${Math.abs(d.valor).toFixed(2)}</td>
+                    <td>${d.formaPagamento || '-'}</td>
+                    <td>${d.parcelamento || '-'}</td>
+                    <td><span class="badge-necessity">${d.necessidade || '-'}</span></td>
+                    <td>${d.planejamento || '-'}</td>
+                    <td>${d.registro || '-'}</td>
+                </tr>
+            `).join('');
+        }
+        
+        function updateFilterOptionsGeneral() {
+            if (!window.financialData) return;
+            const categories = [...new Set(window.financialData.map(d => d.categoria).filter(Boolean))];
+            const registros = [...new Set(window.financialData.map(d => d.registro).filter(Boolean))];
+            const necessities = [...new Set(window.financialData.map(d => d.necessidade).filter(Boolean))];
+            
+            const catSelect = document.getElementById('filterCategoryGeneral');
+            const regSelect = document.getElementById('filterRegistroGeneral');
+            const necSelect = document.getElementById('filterNecessityGeneral');
+            
+            if (catSelect) catSelect.innerHTML = '<option value="">Todas Categorias</option>' + categories.map(c => `<option value="${c}">${c}</option>`).join('');
+            if (regSelect) regSelect.innerHTML = '<option value="">Todos Registros</option>' + registros.map(r => `<option value="${r}">${r}</option>`).join('');
+            if (necSelect) necSelect.innerHTML = '<option value="">Todas Necessidades</option>' + necessities.map(n => `<option value="${n}">${n}</option>`).join('');
+        }
+        
+        // Event listeners
+        const filters = ['filterStartDate', 'filterEndDate', 'filterCategoryGeneral', 'filterTypeGeneral', 'filterRegistroGeneral', 'filterNecessityGeneral'];
+        filters.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('change', updateGeneralTable);
+        });
+        
+        document.getElementById('clearFilters')?.addEventListener('click', () => {
+            filters.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            updateGeneralTable();
+        });
+        
+        // Export functions
+        document.getElementById('exportExcel')?.addEventListener('click', () => {
+            if (window.exportToExcel) window.exportToExcel();
+        });
+        document.getElementById('exportCSV')?.addEventListener('click', () => {
+            if (window.exportToCSV) window.exportToCSV();
+        });
+        document.getElementById('exportPDF')?.addEventListener('click', () => {
+            if (window.exportToPDF) window.exportToPDF();
+        });
+        
+        window.updateGeneralTable = updateGeneralTable;
+        window.updateFilterOptionsGeneral = updateFilterOptionsGeneral;
+    </script>
+    <script src="js/app.js"></script>
+</body>
+</html>
