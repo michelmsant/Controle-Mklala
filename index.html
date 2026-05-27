@@ -17,13 +17,12 @@
         body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;transition:.3s}
         body.dark{background:#0f172a;color:#f1f5f9}
         
-        /* Sidebar */
         .sidebar{position:fixed;left:0;top:0;width:280px;height:100vh;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;transition:.3s;z-index:1000}
         body.dark .sidebar{background:#1e293b;border-color:#334155}
         .sidebar-header{padding:24px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between}
         body.dark .sidebar-header{border-color:#334155}
         .logo{display:flex;align-items:center;gap:12px;font-size:1.5rem;font-weight:700;background:linear-gradient(135deg,#3b82f6,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}
-        .close-menu{display:none;background:none;border:none;font-size:1.25rem;cursor:pointer}
+        .close-menu{display:none;background:none;border:none;font-size:1.25rem;cursor:pointer;color:#64748b}
         .sidebar-nav{flex:1;padding:24px 16px;display:flex;flex-direction:column;gap:8px}
         .nav-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;color:#64748b;text-decoration:none;cursor:pointer;background:none;border:none;width:100%;font-size:1rem}
         body.dark .nav-item{color:#94a3b8}
@@ -35,18 +34,18 @@
         body.dark .sidebar-footer{border-color:#334155}
         .status{display:flex;align-items:center;gap:8px;font-size:.75rem;color:#64748b}
         
-        /* Main */
         .main-content{margin-left:280px}
         .top-bar{height:70px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100}
         body.dark .top-bar{background:#1e293b;border-color:#334155}
-        .menu-toggle{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer}
+        .menu-toggle{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer;color:#0f172a}
+        body.dark .menu-toggle{color:#fff}
         .btn-primary{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:8px}
         .content-wrapper{padding:32px;max-width:1400px;margin:0 auto}
         
-        /* KPIs */
         .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin-bottom:32px}
-        .kpi-card{background:#fff;border-radius:20px;padding:24px;display:flex;align-items:center;gap:20px;border:1px solid #e2e8f0}
+        .kpi-card{background:#fff;border-radius:20px;padding:24px;display:flex;align-items:center;gap:20px;border:1px solid #e2e8f0;transition:transform .2s,box-shadow .2s}
         body.dark .kpi-card{background:#1e293b;border-color:#334155}
+        .kpi-card:hover{transform:translateY(-4px);box-shadow:0 20px 25px -5px rgba(0,0,0,.1)}
         .kpi-icon{width:64px;height:64px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:1.75rem}
         .kpi-icon.revenue{background:rgba(16,185,129,.1);color:#10b981}
         .kpi-icon.expense{background:rgba(239,68,68,.1);color:#ef4444}
@@ -58,22 +57,24 @@
         .kpi-trend.positive{color:#10b981}
         .kpi-trend.negative{color:#ef4444}
         
-        /* Insights */
         .insights-card{background:linear-gradient(135deg,rgba(59,130,246,.05),rgba(139,92,246,.05));border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin-bottom:32px}
         body.dark .insights-card{border-color:#334155}
         .insights-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:16px}
         .insights-title{display:flex;align-items:center;gap:12px}
-        .btn-insight{background:#fff;border:1px solid #e2e8f0;padding:8px 16px;border-radius:8px;cursor:pointer}
+        .insights-title i{font-size:1.5rem;color:#f59e0b}
+        .btn-insight{background:#fff;border:1px solid #e2e8f0;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .2s}
         body.dark .btn-insight{background:#1e293b;border-color:#334155;color:#fff}
+        .btn-insight:hover{transform:translateY(-1px)}
         .insights-content{padding:16px;background:#fff;border-radius:16px}
         body.dark .insights-content{background:#1e293b}
-        .insight-card{display:flex;gap:16px}
+        .insight-card{display:flex;gap:16px;animation:slideIn .3s ease}
+        @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
         .insight-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
         
-        /* Tabelas */
         .charts-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:24px;margin-bottom:32px}
-        .chart-card{background:#fff;border-radius:20px;padding:20px;border:1px solid #e2e8f0}
+        .chart-card{background:#fff;border-radius:20px;padding:20px;border:1px solid #e2e8f0;transition:transform .2s}
         body.dark .chart-card{background:#1e293b;border-color:#334155}
+        .chart-card:hover{transform:translateY(-2px)}
         .chart-header{display:flex;justify-content:space-between;margin-bottom:20px}
         .table-container{overflow-x:auto}
         .data-table{width:100%;border-collapse:collapse;font-size:.875rem}
@@ -81,22 +82,22 @@
         body.dark .data-table th{background:#0f172a}
         .data-table td{padding:12px;border-bottom:1px solid #e2e8f0}
         body.dark .data-table td{border-color:#334155}
+        .data-table tr:hover{background:#f8fafc}
+        body.dark .data-table tr:hover{background:#0f172a}
         .percentage-bar{position:relative;background:#f1f5f9;border-radius:20px;height:28px;overflow:hidden}
         body.dark .percentage-bar{background:#334155}
-        .percentage-fill{position:absolute;left:0;top:0;height:100%;border-radius:20px;transition:.5s}
+        .percentage-fill{position:absolute;left:0;top:0;height:100%;border-radius:20px;transition:width .5s ease}
         .percentage-text{position:relative;z-index:1;display:block;text-align:right;padding-right:8px;line-height:28px;font-size:.75rem;font-weight:600}
         
-        /* Transações */
         .transactions-card{background:#fff;border-radius:20px;padding:20px;border:1px solid #e2e8f0}
         body.dark .transactions-card{background:#1e293b;border-color:#334155}
         .card-header{display:flex;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px}
-        .search-box{display:flex;align-items:center;gap:8px;background:#f1f5f9;padding:8px 16px;border-radius:12px}
-        body.dark .search-box{background:#334155}
-        .search-box input{background:none;border:none;outline:none}
-        body.dark .search-box input{color:#fff}
+        .search-box{display:flex;align-items:center;gap:8px;background:#f1f5f9;padding:8px 16px;border-radius:12px;border:1px solid #e2e8f0}
+        body.dark .search-box{background:#334155;border-color:#475569}
+        .search-box input{background:none;border:none;outline:none;font-family:inherit;color:inherit}
         .table-responsive{overflow-x:auto}
         .transactions-table{width:100%;border-collapse:collapse;font-size:.875rem}
-        .transactions-table th{text-align:left;padding:12px;background:#f8fafc;border-bottom:1px solid #e2e8f0}
+        .transactions-table th{text-align:left;padding:12px;background:#f8fafc;font-weight:600;border-bottom:1px solid #e2e8f0}
         body.dark .transactions-table th{background:#0f172a;border-color:#334155}
         .transactions-table td{padding:12px;border-bottom:1px solid #e2e8f0}
         body.dark .transactions-table td{border-color:#334155}
@@ -105,25 +106,30 @@
         .badge-danger{background:rgba(239,68,68,.1);color:#ef4444}
         .badge-info{background:rgba(139,92,246,.1);color:#8b5cf6}
         
-        /* Dashboard específico */
         .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:24px;margin-bottom:32px}
         .full-width{grid-column:1/-1}
         .filters-bar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
-        .filter-select,.filter-date{padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff}
+        .filter-select,.filter-date{padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer}
         body.dark .filter-select,body.dark .filter-date{background:#1e293b;border-color:#334155;color:#fff}
         .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:24px}
         .metric-card{background:#fff;border-radius:16px;padding:16px;display:flex;align-items:center;gap:12px;border:1px solid #e2e8f0}
         body.dark .metric-card{background:#1e293b;border-color:#334155}
+        .metric-card i{font-size:1.5rem;color:#3b82f6}
+        .metric-label{display:block;font-size:.75rem;color:#64748b}
+        body.dark .metric-label{color:#94a3b8}
+        .metric-value{font-size:1.125rem;font-weight:600}
         
-        /* Geral específico */
-        .filters-panel{background:#fff;border-radius:16px;padding:20px;margin-bottom:24px;display:flex;gap:12px;flex-wrap:wrap;border:1px solid #e2e8f0}
+        .filters-panel{background:#fff;border-radius:16px;padding:20px;margin-bottom:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;border:1px solid #e2e8f0}
         body.dark .filters-panel{background:#1e293b;border-color:#334155}
-        .filter-group{display:flex;align-items:center;gap:8px;background:#f1f5f9;padding:8px 16px;border-radius:8px}
-        body.dark .filter-group{background:#334155}
-        .filter-group input,.filter-group select{background:none;border:none;outline:none}
-        body.dark .filter-group input,body.dark .filter-group select{color:#fff}
-        .btn-clear,.btn-export{background:none;border:1px solid #e2e8f0;padding:8px 16px;border-radius:8px;cursor:pointer}
+        .filter-group{display:flex;align-items:center;gap:8px;background:#f1f5f9;padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0}
+        body.dark .filter-group{background:#334155;border-color:#475569}
+        .filter-group i{color:#64748b}
+        body.dark .filter-group i{color:#94a3b8}
+        .filter-group input,.filter-group select{background:none;border:none;outline:none;font-family:inherit;color:inherit}
+        .btn-clear,.btn-export{background:none;border:1px solid #e2e8f0;padding:8px 16px;border-radius:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
         body.dark .btn-clear,body.dark .btn-export{border-color:#334155;color:#fff}
+        .btn-clear:hover,.btn-export:hover{background:#f1f5f9;transform:translateY(-1px)}
+        body.dark .btn-clear:hover,body.dark .btn-export:hover{background:#334155}
         .summary-bar{display:flex;gap:24px;margin-bottom:24px;padding:16px;background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(139,92,246,.1));border-radius:12px}
         .page-header{display:flex;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px}
         .export-buttons{display:flex;gap:12px}
@@ -131,28 +137,36 @@
         .full-table th,.full-table td{padding:12px;text-align:left;border-bottom:1px solid #e2e8f0}
         body.dark .full-table td{border-color:#334155}
         
-        /* Responsivo */
         @media(max-width:1024px){
             .sidebar{transform:translateX(-100%)}
             .sidebar.open{transform:translateX(0)}
             .main-content{margin-left:0}
             .menu-toggle{display:block}
             .close-menu{display:block}
-            .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:999;display:none}
+            .menu-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:999;display:none}
             .menu-overlay.active{display:block}
         }
         @media(max-width:768px){
             .content-wrapper{padding:16px}
             .kpi-card{padding:16px}
+            .kpi-icon{width:48px;height:48px;font-size:1.25rem}
             .kpi-value{font-size:1.25rem}
             .btn-primary span{display:none}
+            .filters-panel{flex-direction:column;align-items:stretch}
+            .filter-group{width:100%}
+            .export-buttons{flex:1;justify-content:stretch}
+            .btn-export{flex:1;justify-content:center}
         }
+        
+        .loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px)}
+        .loading-spinner{width:50px;height:50px;border:4px solid #f3f3f3;border-top:4px solid #3b82f6;border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+        .valor{font-weight:600;font-family:monospace}
     </style>
 </head>
 <body>
     <div class="menu-overlay"></div>
     
-    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo"><i class="fas fa-chart-line"></i><span>Mërkai Finance</span></div>
@@ -165,25 +179,26 @@
             <div class="nav-divider"></div>
             <button class="nav-item theme-toggle" id="themeToggle"><i class="fas fa-moon"></i><span>Tema Escuro</span></button>
         </nav>
-        <div class="sidebar-footer"><div class="status"><i class="fas fa-sync-alt"></i><span id="statusText">Pronto</span></div></div>
+        <div class="sidebar-footer"><div class="status"><i class="fas fa-sync-alt"></i><span id="statusText">Carregando dados...</span></div></div>
     </aside>
     
     <main class="main-content">
         <header class="top-bar">
             <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-            <button class="btn-primary" id="refreshData"><i class="fas fa-sync-alt"></i><span>Atualizar</span></button>
+            <button class="btn-primary" id="refreshData"><i class="fas fa-sync-alt"></i><span>Atualizar Dados</span></button>
         </header>
         
-        <div class="content-wrapper" id="contentWrapper">
-            <!-- Conteúdo será carregado aqui -->
-        </div>
+        <div class="content-wrapper" id="contentWrapper"></div>
     </main>
 
     <script>
         // ============================================
-        // DADOS DEMO
+        // SEU LINK CSV DO GOOGLE SHEETS (PUBLICADO)
         // ============================================
-        const DEMO_DATA = [
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRFI3VIjbxci5PHXGITqG1JIfOGNtcxMl7M77rKWviNvw5lYYKhfH_0cNMbfiHjftRDE2zpWVksCagD/pub?gid=73745945&single=true&output=csv';
+        
+        // Dados de fallback (caso a planilha não carregue)
+        const FALLBACK_DATA = [
             {data:'2024-01-15',tipo:'Receita',categoria:'Salário',descricao:'Salário Janeiro',valor:5000,registro:'João',formaPagamento:'Pix',necessidade:'Necessário'},
             {data:'2024-01-16',tipo:'Despesa',categoria:'Alimentação',descricao:'Supermercado',valor:350,registro:'João',formaPagamento:'Débito',necessidade:'Necessário'},
             {data:'2024-01-17',tipo:'Despesa',categoria:'Lazer',descricao:'Cinema',valor:45.9,registro:'Maria',formaPagamento:'Crédito',necessidade:'Supérfluo'},
@@ -196,18 +211,109 @@
             {data:'2024-01-24',tipo:'Receita',categoria:'Dividendos',descricao:'Ações',valor:150,registro:'Carlos',formaPagamento:'Débito',necessidade:'Necessário'},
         ];
         
-        let financialData = [...DEMO_DATA];
+        let financialData = [];
         let charts = {};
         let currentPage = 'home';
+        
+        // ========== FUNÇÃO PRINCIPAL - BUSCAR DADOS DO GOOGLE SHEETS ==========
+        async function fetchGoogleSheetsData() {
+            showLoading(true);
+            updateStatus('Baixando dados da planilha...');
+            
+            try {
+                const response = await fetch(CSV_URL);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const csvText = await response.text();
+                const parsedData = parseCSV(csvText);
+                
+                if (parsedData.length === 0) {
+                    throw new Error('Planilha vazia ou formato inválido');
+                }
+                
+                financialData = parsedData;
+                updateStatus(`✅ Conectado! ${financialData.length} registros carregados`);
+                return true;
+                
+            } catch (error) {
+                console.error('Erro ao carregar Google Sheets:', error);
+                updateStatus('⚠️ Usando dados de demonstração (fallback)');
+                financialData = [...FALLBACK_DATA];
+                return false;
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // ========== FUNÇÃO PARA PARSEAR CSV ==========
+        function parseCSV(csvText) {
+            const lines = csvText.split(/\r?\n/);
+            if (lines.length < 2) return [];
+            
+            // Pega os cabeçalhos (primeira linha)
+            const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
+            
+            const result = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                // Parse da linha CSV (suporta valores entre aspas)
+                const values = [];
+                let current = '';
+                let inQuotes = false;
+                for (let char of lines[i]) {
+                    if (char === '"') {
+                        inQuotes = !inQuotes;
+                    } else if (char === ',' && !inQuotes) {
+                        values.push(current);
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                values.push(current);
+                
+                // Limpa aspas extras
+                const cleanValues = values.map(v => v.replace(/^"|"$/g, '').trim());
+                
+                // Mapeia para o objeto baseado nos cabeçalhos (colunas A=0, B=1, etc.)
+                const row = {};
+                headers.forEach((header, idx) => {
+                    let value = cleanValues[idx] || '';
+                    
+                    // Mapeamento baseado nas colunas da sua planilha
+                    if (idx === 0) row.data = value;
+                    else if (idx === 1) row.tipo = value;
+                    else if (idx === 2) row.categoria = value;
+                    else if (idx === 3) row.descricao = value;
+                    else if (idx === 4) {
+                        row.valor = parseFloat(String(value).replace(/[R$\s]/g, '').replace(',', '.')) || 0;
+                    }
+                    else if (idx === 5) row.formaPagamento = value;
+                    else if (idx === 6) row.parcelamento = value;
+                    else if (idx === 7) row.necessidade = value;
+                    else if (idx === 8) row.planejamento = value;
+                    else if (idx === 9) row.registro = value;
+                });
+                
+                // Só adiciona se tiver pelo menos data e valor
+                if (row.data && row.valor !== undefined && row.valor !== 0) {
+                    result.push(row);
+                }
+            }
+            
+            return result;
+        }
         
         // ========== UTILITÁRIOS ==========
         function formatMoney(value){return `R$ ${Math.abs(value).toFixed(2)}`;}
         function getTotalByType(type){return financialData.filter(d=>d.tipo===type).reduce((s,d)=>s+d.valor,0);}
+        function showLoading(show){const existing=document.querySelector('.loading-overlay');if(show && !existing){const div=document.createElement('div');div.className='loading-overlay';div.innerHTML='<div class="loading-spinner"></div>';document.body.appendChild(div);}else if(!show && existing){existing.remove();}}
+        function updateStatus(msg){const el=document.getElementById('statusText');if(el)el.innerText=msg;}
         
         // ========== HOME PAGE ==========
         function renderHome(){
             return `
-                <!-- KPIs -->
                 <div class="kpi-grid">
                     <div class="kpi-card"><div class="kpi-icon revenue"><i class="fas fa-arrow-up"></i></div><div class="kpi-info"><span class="kpi-label">Receitas</span><span class="kpi-value" id="totalRevenue">${formatMoney(getTotalByType('Receita'))}</span><span class="kpi-trend positive" id="revenueTrend">+0%</span></div></div>
                     <div class="kpi-card"><div class="kpi-icon expense"><i class="fas fa-arrow-down"></i></div><div class="kpi-info"><span class="kpi-label">Despesas</span><span class="kpi-value" id="totalExpense">${formatMoney(getTotalByType('Despesa'))}</span><span class="kpi-trend negative" id="expenseTrend">+0%</span></div></div>
@@ -215,33 +321,24 @@
                     <div class="kpi-card"><div class="kpi-icon balance"><i class="fas fa-wallet"></i></div><div class="kpi-info"><span class="kpi-label">Saldo</span><span class="kpi-value" id="totalBalance">${formatMoney(getTotalByType('Receita') - getTotalByType('Despesa'))}</span><span class="kpi-trend" id="balanceTrend">0%</span></div></div>
                 </div>
                 
-                <!-- Insight -->
                 <div class="insights-card"><div class="insights-header"><div class="insights-title"><i class="fas fa-lightbulb"></i><h3>Dica Inteligente</h3></div><button class="btn-insight" id="generateInsight"><i class="fas fa-sync-alt"></i>Nova Dica</button></div><div class="insights-content" id="insightContent"><div class="insight-loading"><i class="fas fa-spinner fa-spin"></i> Analisando...</div></div></div>
                 
-                <!-- Tabelas -->
                 <div class="charts-row">
-                    <div class="chart-card"><div class="chart-header"><h3>📊 Despesas por Pessoa</h3><i class="fas fa-table"></i></div><div class="table-container"><table class="data-table" id="expensesTable"><thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead><tbody id="expensesBody"></tbody></table></div></div>
-                    <div class="chart-card"><div class="chart-header"><h3>📈 Investimentos por Pessoa</h3><i class="fas fa-chart-line"></i></div><div class="table-container"><table class="data-table" id="investmentsTable"><thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead><tbody id="investmentsBody"></tbody></table></div></div>
+                    <div class="chart-card"><div class="chart-header"><h3>📊 Despesas por Pessoa</h3><i class="fas fa-table"></i></div><div class="table-container"><table class="data-table"><thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead><tbody id="expensesBody"></tbody></table></div></div>
+                    <div class="chart-card"><div class="chart-header"><h3>📈 Investimentos por Pessoa</h3><i class="fas fa-chart-line"></i></div><div class="table-container"><table class="data-table"><thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead><tbody id="investmentsBody"></tbody></table></div></div>
                 </div>
                 
-                <!-- Transações Recentes -->
-                <div class="transactions-card"><div class="card-header"><h3>Últimos Lançamentos</h3><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Buscar..." id="searchInput"></div></div><div class="table-responsive"><table class="transactions-table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="transactionsBody"></tbody></tr></div></div>
+                <div class="transactions-card"><div class="card-header"><h3>Últimos Lançamentos</h3><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Buscar..." id="searchInput"></div></div><div class="table-responsive"><table class="transactions-table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="transactionsBody"></tbody></table></div></div>
             `;
         }
         
         // ========== DASHBOARD PAGE ==========
         function renderDashboard(){
-            const expensesByCat = {};
-            financialData.filter(d=>d.tipo==='Despesa').forEach(d=>{expensesByCat[d.categoria]=(expensesByCat[d.categoria]||0)+d.valor;});
-            const payment = {};
-            financialData.forEach(d=>{if(d.formaPagamento)payment[d.formaPagamento]=(payment[d.formaPagamento]||0)+d.valor;});
-            const need = {};
-            financialData.forEach(d=>{if(d.necessidade)need[d.necessidade]=(need[d.necessidade]||0)+d.valor;});
-            
+            const categories = [...new Set(financialData.map(d=>d.categoria).filter(Boolean))];
             return `
                 <h1 class="page-title">Dashboard Analítico</h1>
                 <div class="filters-bar">
-                    <select id="filterCategory" class="filter-select"><option value="">Todas Categorias</option>${[...new Set(financialData.map(d=>d.categoria))].map(c=>`<option value="${c}">${c}</option>`).join('')}</select>
+                    <select id="filterCategory" class="filter-select"><option value="">Todas Categorias</option>${categories.map(c=>`<option value="${c}">${c}</option>`).join('')}</select>
                     <select id="filterType" class="filter-select"><option value="">Todos Tipos</option><option value="Receita">Receita</option><option value="Despesa">Despesa</option><option value="Investimento">Investimento</option></select>
                     <input type="month" id="filterMonth" class="filter-date">
                 </div>
@@ -261,17 +358,18 @@
         
         // ========== GERAL PAGE ==========
         function renderGeral(){
+            const categories = [...new Set(financialData.map(d=>d.categoria).filter(Boolean))];
             return `
                 <div class="page-header"><h1 class="page-title">Registro Geral</h1><div class="export-buttons"><button class="btn-export" id="exportExcel"><i class="fas fa-file-excel"></i> Excel</button><button class="btn-export" id="exportCSV"><i class="fas fa-file-csv"></i> CSV</button><button class="btn-export" id="exportPDF"><i class="fas fa-file-pdf"></i> PDF</button></div></div>
                 <div class="filters-panel">
                     <div class="filter-group"><i class="fas fa-calendar"></i><input type="date" id="startDate" placeholder="Data inicial"></div>
                     <div class="filter-group"><i class="fas fa-calendar"></i><input type="date" id="endDate" placeholder="Data final"></div>
-                    <div class="filter-group"><i class="fas fa-tag"></i><select id="filterCat"><option value="">Categoria</option>${[...new Set(financialData.map(d=>d.categoria))].map(c=>`<option value="${c}">${c}</option>`).join('')}</select></div>
+                    <div class="filter-group"><i class="fas fa-tag"></i><select id="filterCat"><option value="">Categoria</option>${categories.map(c=>`<option value="${c}">${c}</option>`).join('')}</select></div>
                     <div class="filter-group"><i class="fas fa-chart-simple"></i><select id="filterTypeGeral"><option value="">Tipo</option><option value="Receita">Receita</option><option value="Despesa">Despesa</option><option value="Investimento">Investimento</option></select></div>
                     <button class="btn-clear" id="clearFilters"><i class="fas fa-times"></i> Limpar</button>
                 </div>
                 <div class="summary-bar"><div class="summary-item"><span>Registros:</span><strong id="totalReg">${financialData.length}</strong></div><div class="summary-item"><span>Total:</span><strong id="totalSum">${formatMoney(financialData.reduce((s,d)=>s+d.valor,0))}</strong></div></div>
-                <div class="table-card"><div class="table-responsive"><table class="full-table" id="fullTable"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="tableBody">${financialData.map(d=>`<tr><td>${d.data||'-'}</td><td><span class="badge ${d.tipo==='Receita'?'badge-success':d.tipo==='Despesa'?'badge-danger':'badge-info'}">${d.tipo||'-'}</span></td><td>${d.categoria||'-'}</td><td>${d.descricao||'-'}</td><td class="valor">${d.tipo==='Despesa'?'-':'+'} R$ ${Math.abs(d.valor).toFixed(2)}</td><td>${d.registro||'-'}</td></tr>`).join('')}</tbody></table></div></div>
+                <div class="table-card"><div class="table-responsive"><table class="full-table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="tableBody">${financialData.map(d=>`<tr><td>${d.data||'-'}</td><td><span class="badge ${d.tipo==='Receita'?'badge-success':d.tipo==='Despesa'?'badge-danger':'badge-info'}">${d.tipo||'-'}</span></td><td>${d.categoria||'-'}</td><td>${d.descricao||'-'}</td><td class="valor">${d.tipo==='Despesa'?'-':'+'} R$ ${Math.abs(d.valor).toFixed(2)}</td><td>${d.registro||'-'}</td></tr>`).join('')}</tbody>}</table></div></div>
             `;
         }
         
@@ -282,7 +380,9 @@
             const totalExpense = Object.values(expensesByPerson).reduce((a,b)=>a+b,0);
             const expensesBody = document.getElementById('expensesBody');
             if(expensesBody){
-                expensesBody.innerHTML = Object.entries(expensesByPerson).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`<tr><td><strong>${p}</strong></td><td class="valor">R$ ${v.toFixed(2)}</td><td><div class="percentage-bar"><div class="percentage-fill" style="width:${totalExpense?((v/totalExpense)*100):0}%;background:#ef4444"></div><span class="percentage-text">${totalExpense?((v/totalExpense)*100).toFixed(1):0}%</span></div></td></tr>`).join('') || '<tr><td colspan="3">Nenhum dado</td></tr>';
+                expensesBody.innerHTML = Object.entries(expensesByPerson).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`
+                    <tr><td><strong>${p}</strong></td><td class="valor">R$ ${v.toFixed(2)}</td><td><div class="percentage-bar"><div class="percentage-fill" style="width:${totalExpense?((v/totalExpense)*100):0}%;background:#ef4444"></div><span class="percentage-text">${totalExpense?((v/totalExpense)*100).toFixed(1):0}%</span></div></td></tr>
+                `).join('') || '<tr><td colspan="3">Nenhum dado</td></tr>';
             }
             
             const investmentsByPerson = {};
@@ -290,7 +390,9 @@
             const totalInv = Object.values(investmentsByPerson).reduce((a,b)=>a+b,0);
             const investmentsBody = document.getElementById('investmentsBody');
             if(investmentsBody){
-                investmentsBody.innerHTML = Object.entries(investmentsByPerson).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`<tr><td><strong>${p}</strong></td><td class="valor">R$ ${v.toFixed(2)}</td><td><div class="percentage-bar"><div class="percentage-fill" style="width:${totalInv?((v/totalInv)*100):0}%;background:#8b5cf6"></div><span class="percentage-text">${totalInv?((v/totalInv)*100).toFixed(1):0}%</span></div></td></tr>`).join('') || '<tr><td colspan="3">Nenhum investimento</td></tr>';
+                investmentsBody.innerHTML = Object.entries(investmentsByPerson).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`
+                    <tr><td><strong>${p}</strong></td><td class="valor">R$ ${v.toFixed(2)}</td><td><div class="percentage-bar"><div class="percentage-fill" style="width:${totalInv?((v/totalInv)*100):0}%;background:#8b5cf6"></div><span class="percentage-text">${totalInv?((v/totalInv)*100).toFixed(1):0}%</span></div></td></tr>
+                `).join('') || '<tr><td colspan="3">Nenhum investimento</td></tr>';
             }
         }
         
@@ -300,7 +402,9 @@
             if(!tbody) return;
             let filtered = [...financialData].sort((a,b)=>new Date(b.data)-new Date(a.data)).slice(0,15);
             if(searchTerm) filtered = filtered.filter(t=>Object.values(t).some(v=>String(v).toLowerCase().includes(searchTerm)));
-            tbody.innerHTML = filtered.map(t=>`<tr><td>${t.data||'-'}</td><td><span class="badge ${t.tipo==='Receita'?'badge-success':t.tipo==='Despesa'?'badge-danger':'badge-info'}">${t.tipo||'-'}</span></td><td>${t.categoria||'-'}</td><td>${t.descricao||'-'}</td><td class="valor">${t.tipo==='Despesa'?'-':'+'} R$ ${Math.abs(t.valor).toFixed(2)}</td><td>${t.registro||'-'}</td></tr>`).join('');
+            tbody.innerHTML = filtered.map(t=>`
+                <tr><td>${t.data||'-'}</td><td><span class="badge ${t.tipo==='Receita'?'badge-success':t.tipo==='Despesa'?'badge-danger':'badge-info'}">${t.tipo||'-'}</span></td><td>${t.categoria||'-'}</td><td>${t.descricao||'-'}</td><td class="valor">${t.tipo==='Despesa'?'-':'+'} R$ ${Math.abs(t.valor).toFixed(2)}</td><td>${t.registro||'-'}</td></tr>
+            `).join('');
         }
         
         // ========== ATUALIZAR KPIs ==========
@@ -338,27 +442,26 @@
         // ========== GRÁFICOS DASHBOARD ==========
         function updateDashboardCharts(){
             if(!document.getElementById('catChart')) return;
-            
             const expensesByCat = {};
             financialData.filter(d=>d.tipo==='Despesa').forEach(d=>{expensesByCat[d.categoria]=(expensesByCat[d.categoria]||0)+d.valor;});
             if(charts.cat) charts.cat.destroy();
-            charts.cat = new Chart(document.getElementById('catChart'),{type:'doughnut',data:{labels:Object.keys(expensesByCat),datasets:[{data:Object.values(expensesByCat),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6']}]},options:{responsive:true}});
+            charts.cat = new Chart(document.getElementById('catChart'),{type:'doughnut',data:{labels:Object.keys(expensesByCat),datasets:[{data:Object.values(expensesByCat),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6']}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom'}}}});
             
             const payment = {};
             financialData.forEach(d=>{if(d.formaPagamento)payment[d.formaPagamento]=(payment[d.formaPagamento]||0)+d.valor;});
             if(charts.payment) charts.payment.destroy();
-            charts.payment = new Chart(document.getElementById('paymentChart'),{type:'pie',data:{labels:Object.keys(payment),datasets:[{data:Object.values(payment),backgroundColor:['#10b981','#f59e0b','#ef4444','#8b5cf6']}]}});
+            charts.payment = new Chart(document.getElementById('paymentChart'),{type:'pie',data:{labels:Object.keys(payment),datasets:[{data:Object.values(payment),backgroundColor:['#10b981','#f59e0b','#ef4444','#8b5cf6']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
             
             const need = {};
             financialData.forEach(d=>{if(d.necessidade)need[d.necessidade]=(need[d.necessidade]||0)+d.valor;});
             if(charts.need) charts.need.destroy();
-            charts.need = new Chart(document.getElementById('needChart'),{type:'doughnut',data:{labels:Object.keys(need),datasets:[{data:Object.values(need),backgroundColor:['#ef4444','#f59e0b','#10b981']}]}});
+            charts.need = new Chart(document.getElementById('needChart'),{type:'doughnut',data:{labels:Object.keys(need),datasets:[{data:Object.values(need),backgroundColor:['#ef4444','#f59e0b','#10b981']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
             
             const monthly = {};
             financialData.forEach(d=>{if(d.data){const m=d.data.substring(0,7);if(!monthly[m])monthly[m]={r:0,e:0};if(d.tipo==='Receita')monthly[m].r+=d.valor;if(d.tipo==='Despesa')monthly[m].e+=d.valor;}});
             const months=Object.keys(monthly).sort();
             if(charts.monthly) charts.monthly.destroy();
-            charts.monthly = new Chart(document.getElementById('monthlyChart'),{type:'line',data:{labels:months,datasets:[{label:'Receitas',data:months.map(m=>monthly[m].r),borderColor:'#10b981',fill:true,backgroundColor:'rgba(16,185,129,0.1)'},{label:'Despesas',data:months.map(m=>monthly[m].e),borderColor:'#ef4444',fill:true,backgroundColor:'rgba(239,68,68,0.1)'}]}});
+            charts.monthly = new Chart(document.getElementById('monthlyChart'),{type:'line',data:{labels:months,datasets:[{label:'Receitas',data:months.map(m=>monthly[m].r),borderColor:'#10b981',fill:true,backgroundColor:'rgba(16,185,129,0.1)',tension:0.4},{label:'Despesas',data:months.map(m=>monthly[m].e),borderColor:'#ef4444',fill:true,backgroundColor:'rgba(239,68,68,0.1)',tension:0.4}]},options:{responsive:true,plugins:{tooltip:{callbacks:{label:(ctx)=>`R$ ${ctx.raw.toFixed(2)}`}}}}});
         }
         
         // ========== TABELA GERAL ==========
@@ -405,9 +508,6 @@
             doc.autoTable({startY:50,head:[['Data','Tipo','Categoria','Descrição','Valor','Registro']],body:body,theme:'striped',headStyles:{fillColor:[59,130,246]}});
             doc.save(`extrato_${new Date().toISOString().split('T')[0]}.pdf`);
         }
-        
-        // ========== FILTROS ==========
-        function updateFilters(){}
         
         // ========== TEMA ==========
         function initTheme(){
@@ -481,20 +581,22 @@
             },50);
         }
         
-        // ========== REFRESH ==========
-        function refreshAll(){
+        // ========== REFRESH COMPLETO ==========
+        async function fullRefresh(){
+            await fetchGoogleSheetsData();
             loadPage(currentPage);
             const statusEl = document.getElementById('statusText');
-            if(statusEl) statusEl.innerText = `Atualizado ${new Date().toLocaleTimeString()}`;
+            if(statusEl) statusEl.innerText = `✅ ${financialData.length} registros | ${new Date().toLocaleTimeString()}`;
         }
         
         // ========== INICIALIZAR ==========
-        document.addEventListener('DOMContentLoaded',()=>{
+        document.addEventListener('DOMContentLoaded', async()=>{
             initTheme();
             initMenu();
+            await fetchGoogleSheetsData();
             loadPage('home');
-            document.getElementById('refreshData')?.addEventListener('click',refreshAll);
-            setInterval(refreshAll,30000);
+            document.getElementById('refreshData')?.addEventListener('click',fullRefresh);
+            setInterval(fullRefresh, 60000);
         });
     </script>
 </body>
