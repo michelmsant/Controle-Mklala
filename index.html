@@ -17,6 +17,7 @@
         body{font-family:'Inter',sans-serif;background:#f8fafc;color:#0f172a;transition:.3s}
         body.dark{background:#0f172a;color:#f1f5f9}
         
+        /* Sidebar */
         .sidebar{position:fixed;left:0;top:0;width:280px;height:100vh;background:#fff;border-right:1px solid #e2e8f0;display:flex;flex-direction:column;transition:.3s;z-index:1000}
         body.dark .sidebar{background:#1e293b;border-color:#334155}
         .sidebar-header{padding:24px;border-bottom:1px solid #e2e8f0;display:flex;justify-content:space-between}
@@ -34,6 +35,7 @@
         body.dark .sidebar-footer{border-color:#334155}
         .status{display:flex;align-items:center;gap:8px;font-size:.75rem;color:#64748b}
         
+        /* Main */
         .main-content{margin-left:280px}
         .top-bar{height:70px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100}
         body.dark .top-bar{background:#1e293b;border-color:#334155}
@@ -42,6 +44,7 @@
         .btn-primary{background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-weight:500;display:flex;align-items:center;gap:8px}
         .content-wrapper{padding:32px;max-width:1400px;margin:0 auto}
         
+        /* KPIs */
         .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin-bottom:32px}
         .kpi-card{background:#fff;border-radius:20px;padding:24px;display:flex;align-items:center;gap:20px;border:1px solid #e2e8f0;transition:transform .2s,box-shadow .2s}
         body.dark .kpi-card{background:#1e293b;border-color:#334155}
@@ -57,6 +60,7 @@
         .kpi-trend.positive{color:#10b981}
         .kpi-trend.negative{color:#ef4444}
         
+        /* Insights */
         .insights-card{background:linear-gradient(135deg,rgba(59,130,246,.05),rgba(139,92,246,.05));border:1px solid #e2e8f0;border-radius:20px;padding:24px;margin-bottom:32px}
         body.dark .insights-card{border-color:#334155}
         .insights-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:16px}
@@ -71,11 +75,18 @@
         @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
         .insight-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
         
-        .charts-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:24px;margin-bottom:32px}
+        /* Charts Row - duas colunas */
+        .charts-row{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-bottom:32px}
+        @media(max-width:768px){.charts-row{grid-template-columns:1fr}}
+        
         .chart-card{background:#fff;border-radius:20px;padding:20px;border:1px solid #e2e8f0;transition:transform .2s}
         body.dark .chart-card{background:#1e293b;border-color:#334155}
         .chart-card:hover{transform:translateY(-2px)}
-        .chart-header{display:flex;justify-content:space-between;margin-bottom:20px}
+        .chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+        .chart-header h3{font-size:1rem;font-weight:600}
+        .chart-header i{font-size:1.25rem;color:#64748b}
+        
+        /* Tabelas de dados */
         .table-container{overflow-x:auto}
         .data-table{width:100%;border-collapse:collapse;font-size:.875rem}
         .data-table th{text-align:left;padding:12px;background:#f8fafc;font-weight:600}
@@ -84,14 +95,17 @@
         body.dark .data-table td{border-color:#334155}
         .data-table tr:hover{background:#f8fafc}
         body.dark .data-table tr:hover{background:#0f172a}
+        
+        /* Barras de percentual */
         .percentage-bar{position:relative;background:#f1f5f9;border-radius:20px;height:28px;overflow:hidden}
         body.dark .percentage-bar{background:#334155}
         .percentage-fill{position:absolute;left:0;top:0;height:100%;border-radius:20px;transition:width .5s ease}
         .percentage-text{position:relative;z-index:1;display:block;text-align:right;padding-right:8px;line-height:28px;font-size:.75rem;font-weight:600}
         
+        /* Transações */
         .transactions-card{background:#fff;border-radius:20px;padding:20px;border:1px solid #e2e8f0}
         body.dark .transactions-card{background:#1e293b;border-color:#334155}
-        .card-header{display:flex;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:16px}
+        .card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:16px}
         .search-box{display:flex;align-items:center;gap:8px;background:#f1f5f9;padding:8px 16px;border-radius:12px;border:1px solid #e2e8f0}
         body.dark .search-box{background:#334155;border-color:#475569}
         .search-box input{background:none;border:none;outline:none;font-family:inherit;color:inherit}
@@ -101,11 +115,14 @@
         body.dark .transactions-table th{background:#0f172a;border-color:#334155}
         .transactions-table td{padding:12px;border-bottom:1px solid #e2e8f0}
         body.dark .transactions-table td{border-color:#334155}
+        
+        /* Badges */
         .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:500}
         .badge-success{background:rgba(16,185,129,.1);color:#10b981}
         .badge-danger{background:rgba(239,68,68,.1);color:#ef4444}
         .badge-info{background:rgba(139,92,246,.1);color:#8b5cf6}
         
+        /* Dashboard específico */
         .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:24px;margin-bottom:32px}
         .full-width{grid-column:1/-1}
         .filters-bar{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
@@ -119,6 +136,7 @@
         body.dark .metric-label{color:#94a3b8}
         .metric-value{font-size:1.125rem;font-weight:600}
         
+        /* Geral específico */
         .filters-panel{background:#fff;border-radius:16px;padding:20px;margin-bottom:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;border:1px solid #e2e8f0}
         body.dark .filters-panel{background:#1e293b;border-color:#334155}
         .filter-group{display:flex;align-items:center;gap:8px;background:#f1f5f9;padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0}
@@ -136,7 +154,9 @@
         .full-table{width:100%;border-collapse:collapse}
         .full-table th,.full-table td{padding:12px;text-align:left;border-bottom:1px solid #e2e8f0}
         body.dark .full-table td{border-color:#334155}
+        .valor{font-weight:600;font-family:monospace}
         
+        /* Responsivo */
         @media(max-width:1024px){
             .sidebar{transform:translateX(-100%)}
             .sidebar.open{transform:translateX(0)}
@@ -158,10 +178,10 @@
             .btn-export{flex:1;justify-content:center}
         }
         
+        /* Loading */
         .loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter:blur(4px)}
         .loading-spinner{width:50px;height:50px;border:4px solid #f3f3f3;border-top:4px solid #3b82f6;border-radius:50%;animation:spin 1s linear infinite}
         @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-        .valor{font-weight:600;font-family:monospace}
     </style>
 </head>
 <body>
@@ -197,17 +217,25 @@
         // ============================================
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRFI3VIjbxci5PHXGITqG1JIfOGNtcxMl7M77rKWviNvw5lYYKhfH_0cNMbfiHjftRDE2zpWVksCagD/pub?gid=73745945&single=true&output=csv';
         
-        // Dados de fallback
-        const FALLBACK_DATA = [
-            {data:'2024-01-15',tipo:'Receita',categoria:'Salário',descricao:'Salário',valor:5000,registro:'João',formaPagamento:'Pix',necessidade:'Necessário'},
-            {data:'2024-01-16',tipo:'Despesa',categoria:'Alimentação',descricao:'Supermercado',valor:350,registro:'João',formaPagamento:'Débito',necessidade:'Necessário'},
-        ];
-        
         let financialData = [];
         let charts = {};
         let currentPage = 'home';
         
-        // ========== FUNÇÃO CORRIGIDA PARA PARSEAR CSV COM FORMATO BRASILEIRO ==========
+        // ========== FUNÇÃO PARA CONVERTER VALOR BRASILEIRO ==========
+        function parseBrazilianValue(valorStr) {
+            if (!valorStr) return 0;
+            // Remove "R$" e espaços
+            let cleaned = valorStr.toString().replace(/R\$\s*/gi, '');
+            // Remove pontos de milhar
+            cleaned = cleaned.replace(/\./g, '');
+            // Substitui vírgula decimal por ponto
+            cleaned = cleaned.replace(/,/g, '.');
+            // Converte para número
+            const num = parseFloat(cleaned);
+            return isNaN(num) ? 0 : num;
+        }
+        
+        // ========== FUNÇÃO PARA PARSEAR CSV ==========
         function parseCSV(csvText) {
             const lines = csvText.split(/\r?\n/);
             if (lines.length < 2) return [];
@@ -236,32 +264,15 @@
                 // Limpa aspas extras
                 const cleanValues = values.map(v => v.replace(/^"|"$/g, '').trim());
                 
-                // Se não tiver pelo menos 5 colunas, pula
                 if (cleanValues.length < 5) continue;
                 
-                // ========== CORREÇÃO: CONVERTER FORMATO BRASILEIRO PARA NÚMERO ==========
-                let valorRaw = cleanValues[4] || '0';
-                
-                // Remove "R$" e espaços
-                valorRaw = valorRaw.replace(/R\$\s*/gi, '');
-                
-                // Remove pontos dos milhares (ex: 2.000 -> 2000)
-                valorRaw = valorRaw.replace(/\./g, '');
-                
-                // Substitui vírgula decimal por ponto (ex: 2000,00 -> 2000.00)
-                valorRaw = valorRaw.replace(/,/g, '.');
-                
-                // Converte para número
-                let valorNumerico = parseFloat(valorRaw);
-                if (isNaN(valorNumerico)) valorNumerico = 0;
-                
-                // Cria o objeto
+                // Colunas: A=0(Data), B=1(Tipo), C=2(Categoria), D=3(Descrição), E=4(Valor), F=5(Pagamento), G=6(Parcelamento), H=7(Necessidade), I=8(Planejamento), J=9(Registro)
                 const row = {
                     data: cleanValues[0] || '',
                     tipo: cleanValues[1] || '',
                     categoria: cleanValues[2] || '',
                     descricao: cleanValues[3] || '',
-                    valor: valorNumerico,
+                    valor: parseBrazilianValue(cleanValues[4]),
                     formaPagamento: cleanValues[5] || '',
                     parcelamento: cleanValues[6] || '',
                     necessidade: cleanValues[7] || '',
@@ -294,16 +305,14 @@
                 }
                 
                 financialData = parsedData;
-                updateStatus(`✅ Conectado! ${financialData.length} registros carregados`);
+                updateStatus(`✅ Conectado! ${financialData.length} registros`);
                 
-                // Debug: Mostra os primeiros valores no console
-                console.log('Primeiros registros carregados:', financialData.slice(0, 3));
+                console.log('Dados carregados:', financialData.slice(0, 3));
                 return true;
                 
             } catch (error) {
                 console.error('Erro:', error);
-                updateStatus('⚠️ Usando dados de demonstração');
-                financialData = [...FALLBACK_DATA];
+                updateStatus('⚠️ Erro na conexão');
                 return false;
             } finally {
                 showLoading(false);
@@ -311,27 +320,163 @@
         }
         
         // ========== UTILITÁRIOS ==========
-        function formatMoney(value){return `R$ ${Math.abs(value).toFixed(2).replace('.', ',')}`;}
+        function formatMoney(value){return `R$ ${value.toFixed(2).replace('.', ',')}`;}
         function getTotalByType(type){return financialData.filter(d=>d.tipo===type).reduce((s,d)=>s+d.valor,0);}
         function showLoading(show){const existing=document.querySelector('.loading-overlay');if(show && !existing){const div=document.createElement('div');div.className='loading-overlay';div.innerHTML='<div class="loading-spinner"></div>';document.body.appendChild(div);}else if(!show && existing){existing.remove();}}
         function updateStatus(msg){const el=document.getElementById('statusText');if(el)el.innerText=msg;}
         
         // ========== HOME PAGE ==========
         function renderHome(){
+            const revenue = getTotalByType('Receita');
+            const expense = getTotalByType('Despesa');
+            const investment = getTotalByType('Investimento');
+            const balance = revenue - expense;
+            
             return `
                 <div class="kpi-grid">
-                    <div class="kpi-card"><div class="kpi-icon revenue"><i class="fas fa-arrow-up"></i></div><div class="kpi-info"><span class="kpi-label">Receitas</span><span class="kpi-value" id="totalRevenue">${formatMoney(getTotalByType('Receita'))}</span><span class="kpi-trend positive">+0%</span></div></div>
-                    <div class="kpi-card"><div class="kpi-icon expense"><i class="fas fa-arrow-down"></i></div><div class="kpi-info"><span class="kpi-label">Despesas</span><span class="kpi-value" id="totalExpense">${formatMoney(getTotalByType('Despesa'))}</span><span class="kpi-trend negative">+0%</span></div></div>
-                    <div class="kpi-card"><div class="kpi-icon investment"><i class="fas fa-chart-line"></i></div><div class="kpi-info"><span class="kpi-label">Investimentos</span><span class="kpi-value" id="totalInvestment">${formatMoney(getTotalByType('Investimento'))}</span><span class="kpi-trend">0%</span></div></div>
-                    <div class="kpi-card"><div class="kpi-icon balance"><i class="fas fa-wallet"></i></div><div class="kpi-info"><span class="kpi-label">Saldo</span><span class="kpi-value" id="totalBalance">${formatMoney(getTotalByType('Receita') - getTotalByType('Despesa'))}</span><span class="kpi-trend">0%</span></div></div>
+                    <div class="kpi-card"><div class="kpi-icon revenue"><i class="fas fa-arrow-up"></i></div><div class="kpi-info"><span class="kpi-label">Receitas</span><span class="kpi-value" id="totalRevenue">${formatMoney(revenue)}</span><span class="kpi-trend positive">+0%</span></div></div>
+                    <div class="kpi-card"><div class="kpi-icon expense"><i class="fas fa-arrow-down"></i></div><div class="kpi-info"><span class="kpi-label">Despesas</span><span class="kpi-value" id="totalExpense">${formatMoney(expense)}</span><span class="kpi-trend negative">+0%</span></div></div>
+                    <div class="kpi-card"><div class="kpi-icon investment"><i class="fas fa-chart-line"></i></div><div class="kpi-info"><span class="kpi-label">Investimentos</span><span class="kpi-value" id="totalInvestment">${formatMoney(investment)}</span><span class="kpi-trend">0%</span></div></div>
+                    <div class="kpi-card"><div class="kpi-icon balance"><i class="fas fa-wallet"></i></div><div class="kpi-info"><span class="kpi-label">Saldo</span><span class="kpi-value" id="totalBalance">${formatMoney(balance)}</span><span class="kpi-trend">0%</span></div></div>
                 </div>
+                
                 <div class="insights-card"><div class="insights-header"><div class="insights-title"><i class="fas fa-lightbulb"></i><h3>Dica Inteligente</h3></div><button class="btn-insight" id="generateInsight"><i class="fas fa-sync-alt"></i>Nova Dica</button></div><div class="insights-content" id="insightContent"><div class="insight-loading"><i class="fas fa-spinner fa-spin"></i> Analisando...</div></div></div>
+                
                 <div class="charts-row">
-                    <div class="chart-card"><div class="chart-header"><h3>📊 Despesas por Pessoa</h3><i class="fas fa-table"></i></div><div class="table-container"><table class="data-table"><thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead><tbody id="expensesBody"></tbody></table></div></div>
-                    <div class="chart-card"><div class="chart-header"><h3>📈 Investimentos por Pessoa</h3><i class="fas fa-chart-line"></i></div><div class="table-container"><table class="data-table"><thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead><tbody id="investmentsBody"></tbody></tr></div></div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>📊 Despesas por Pessoa</h3>
+                            <i class="fas fa-table"></i>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead>
+                                <tbody id="expensesBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>📈 Investimentos por Pessoa</h3>
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead><tr><th>Pessoa</th><th>Valor</th><th>%</th></tr></thead>
+                                <tbody id="investmentsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="transactions-card"><div class="card-header"><h3>Últimos Lançamentos</h3><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Buscar..." id="searchInput"></div></div><div class="table-responsive"><table class="transactions-table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="transactionsBody"></tbody></table></div></div>
+                
+                <div class="transactions-card">
+                    <div class="card-header">
+                        <h3>Últimos Lançamentos</h3>
+                        <div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Buscar..." id="searchInput"></div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="transactions-table">
+                            <thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead>
+                            <tbody id="transactionsBody"></tbody>
+                        </table>
+                    </div>
+                </div>
             `;
+        }
+        
+        // ========== ATUALIZAR TABELAS HOME ==========
+        function updateHomeTables(){
+            // Despesas por pessoa
+            const expensesByPerson = {};
+            financialData.filter(d=>d.tipo==='Despesa').forEach(d=>{if(d.registro)expensesByPerson[d.registro]=(expensesByPerson[d.registro]||0)+d.valor;});
+            const totalExpense = Object.values(expensesByPerson).reduce((a,b)=>a+b,0);
+            const expensesBody = document.getElementById('expensesBody');
+            if(expensesBody){
+                const sortedExpenses = Object.entries(expensesByPerson).sort((a,b)=>b[1]-a[1]);
+                expensesBody.innerHTML = sortedExpenses.map(([p,v])=>`
+                    <tr>
+                        <td><strong>${p}</strong></td>
+                        <td class="valor">${formatMoney(v)}</td>
+                        <td>
+                            <div class="percentage-bar">
+                                <div class="percentage-fill" style="width:${totalExpense?((v/totalExpense)*100):0}%;background:#ef4444"></div>
+                                <span class="percentage-text">${totalExpense?((v/totalExpense)*100).toFixed(1):0}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+                if(sortedExpenses.length === 0) expensesBody.innerHTML = '<tr><td colspan="3">Nenhuma despesa encontrada</td></tr>';
+            }
+            
+            // Investimentos por pessoa
+            const investmentsByPerson = {};
+            financialData.filter(d=>d.tipo==='Investimento').forEach(d=>{if(d.registro)investmentsByPerson[d.registro]=(investmentsByPerson[d.registro]||0)+d.valor;});
+            const totalInv = Object.values(investmentsByPerson).reduce((a,b)=>a+b,0);
+            const investmentsBody = document.getElementById('investmentsBody');
+            if(investmentsBody){
+                const sortedInv = Object.entries(investmentsByPerson).sort((a,b)=>b[1]-a[1]);
+                investmentsBody.innerHTML = sortedInv.map(([p,v])=>`
+                    <tr>
+                        <td><strong>${p}</strong></td>
+                        <td class="valor">${formatMoney(v)}</td>
+                        <td>
+                            <div class="percentage-bar">
+                                <div class="percentage-fill" style="width:${totalInv?((v/totalInv)*100):0}%;background:#8b5cf6"></div>
+                                <span class="percentage-text">${totalInv?((v/totalInv)*100).toFixed(1):0}%</span>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+                if(sortedInv.length === 0) investmentsBody.innerHTML = '<tr><td colspan="3">Nenhum investimento encontrado</td></tr>';
+            }
+        }
+        
+        // ========== ATUALIZAR TRANSAÇÕES ==========
+        function updateTransactions(searchTerm=''){
+            const tbody = document.getElementById('transactionsBody');
+            if(!tbody) return;
+            let filtered = [...financialData].sort((a,b)=>new Date(b.data)-new Date(a.data)).slice(0,15);
+            if(searchTerm) filtered = filtered.filter(t=>Object.values(t).some(v=>String(v).toLowerCase().includes(searchTerm)));
+            tbody.innerHTML = filtered.map(t=>`
+                <tr>
+                    <td>${t.data||'-'}</td>
+                    <td><span class="badge ${t.tipo==='Receita'?'badge-success':t.tipo==='Despesa'?'badge-danger':'badge-info'}">${t.tipo||'-'}</span></td>
+                    <td>${t.categoria||'-'}</td>
+                    <td>${t.descricao||'-'}</td>
+                    <td class="valor">${t.tipo==='Despesa'?'- ':'+ '}${formatMoney(t.valor)}</td>
+                    <td>${t.registro||'-'}</td>
+                </tr>
+            `).join('');
+            if(filtered.length === 0) tbody.innerHTML = '<tr><td colspan="6">Nenhum registro encontrado</td></tr>';
+        }
+        
+        // ========== ATUALIZAR KPIs ==========
+        function updateKPIs(){
+            const revenue = getTotalByType('Receita');
+            const expense = getTotalByType('Despesa');
+            const investment = getTotalByType('Investimento');
+            const balance = revenue - expense;
+            const el = (id,val)=>{const e=document.getElementById(id);if(e)e.innerText=val;};
+            el('totalRevenue', formatMoney(revenue));
+            el('totalExpense', formatMoney(expense));
+            el('totalInvestment', formatMoney(investment));
+            el('totalBalance', formatMoney(balance));
+        }
+        
+        // ========== GERAR INSIGHT ==========
+        function generateInsight(){
+            const exp = financialData.filter(d=>d.tipo==='Despesa').reduce((s,d)=>s+d.valor,0);
+            const rev = financialData.filter(d=>d.tipo==='Receita').reduce((s,d)=>s+d.valor,0);
+            const container = document.getElementById('insightContent');
+            if(container){
+                if(rev>exp){
+                    container.innerHTML = `<div class="insight-card"><div class="insight-icon" style="background:#10b98120;color:#10b981"><i class="fas fa-smile"></i></div><div class="insight-text"><div class="insight-title">Saldo Positivo!</div><div class="insight-description">Seu saldo está positivo em ${formatMoney(rev-exp)}! Continue assim!</div></div></div>`;
+                } else if(exp>rev){
+                    container.innerHTML = `<div class="insight-card"><div class="insight-icon" style="background:#ef444420;color:#ef4444"><i class="fas fa-chart-line"></i></div><div class="insight-text"><div class="insight-title">Alerta de Gasto</div><div class="insight-description">Suas despesas estão maiores que suas receitas em ${formatMoney(exp-rev)}. Revise seus gastos!</div></div></div>`;
+                } else {
+                    container.innerHTML = `<div class="insight-card"><div class="insight-icon" style="background:#3b82f620;color:#3b82f6"><i class="fas fa-chart-line"></i></div><div class="insight-text"><div class="insight-title">Análise Financeira</div><div class="insight-description">Continue acompanhando seus gastos para manter as finanças saudáveis!</div></div></div>`;
+                }
+            }
         }
         
         // ========== DASHBOARD PAGE ==========
@@ -358,90 +503,14 @@
             `;
         }
         
-        // ========== GERAL PAGE ==========
-        function renderGeral(){
-            const categories = [...new Set(financialData.map(d=>d.categoria).filter(Boolean))];
-            return `
-                <div class="page-header"><h1 class="page-title">Registro Geral</h1><div class="export-buttons"><button class="btn-export" id="exportExcel"><i class="fas fa-file-excel"></i> Excel</button><button class="btn-export" id="exportCSV"><i class="fas fa-file-csv"></i> CSV</button><button class="btn-export" id="exportPDF"><i class="fas fa-file-pdf"></i> PDF</button></div></div>
-                <div class="filters-panel">
-                    <div class="filter-group"><i class="fas fa-calendar"></i><input type="date" id="startDate" placeholder="Data inicial"></div>
-                    <div class="filter-group"><i class="fas fa-calendar"></i><input type="date" id="endDate" placeholder="Data final"></div>
-                    <div class="filter-group"><i class="fas fa-tag"></i><select id="filterCat"><option value="">Categoria</option>${categories.map(c=>`<option value="${c}">${c}</option>`).join('')}</select></div>
-                    <div class="filter-group"><i class="fas fa-chart-simple"></i><select id="filterTypeGeral"><option value="">Tipo</option><option value="Receita">Receita</option><option value="Despesa">Despesa</option><option value="Investimento">Investimento</option></select></div>
-                    <button class="btn-clear" id="clearFilters"><i class="fas fa-times"></i> Limpar</button>
-                </div>
-                <div class="summary-bar"><div class="summary-item"><span>Registros:</span><strong id="totalReg">${financialData.length}</strong></div><div class="summary-item"><span>Total:</span><strong id="totalSum">${formatMoney(financialData.reduce((s,d)=>s+d.valor,0))}</strong></div></div>
-                <div class="table-card"><div class="table-responsive"><table class="full-table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="tableBody">${financialData.map(d=>`<tr><td>${d.data||'-'}</td><td><span class="badge ${d.tipo==='Receita'?'badge-success':d.tipo==='Despesa'?'badge-danger':'badge-info'}">${d.tipo||'-'}</span></td><td>${d.categoria||'-'}</td><td>${d.descricao||'-'}</td><td class="valor">${d.tipo==='Despesa'?'-':'+'} ${formatMoney(d.valor)}</td><td>${d.registro||'-'}</td></tr>`).join('')}</tbody>}</table></div></div>
-            `;
-        }
-        
-        // ========== ATUALIZAR TABELAS HOME ==========
-        function updateHomeTables(){
-            const expensesByPerson = {};
-            financialData.filter(d=>d.tipo==='Despesa').forEach(d=>{if(d.registro)expensesByPerson[d.registro]=(expensesByPerson[d.registro]||0)+d.valor;});
-            const totalExpense = Object.values(expensesByPerson).reduce((a,b)=>a+b,0);
-            const expensesBody = document.getElementById('expensesBody');
-            if(expensesBody){
-                expensesBody.innerHTML = Object.entries(expensesByPerson).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`<tr><td><strong>${p}</strong></td><td class="valor">${formatMoney(v)}</td><td><div class="percentage-bar"><div class="percentage-fill" style="width:${totalExpense?((v/totalExpense)*100):0}%;background:#ef4444"></div><span class="percentage-text">${totalExpense?((v/totalExpense)*100).toFixed(1):0}%</span></div></td></tr>`).join('') || '<tr><td colspan="3">Nenhum dado</td></tr>';
-            }
-            
-            const investmentsByPerson = {};
-            financialData.filter(d=>d.tipo==='Investimento').forEach(d=>{if(d.registro)investmentsByPerson[d.registro]=(investmentsByPerson[d.registro]||0)+d.valor;});
-            const totalInv = Object.values(investmentsByPerson).reduce((a,b)=>a+b,0);
-            const investmentsBody = document.getElementById('investmentsBody');
-            if(investmentsBody){
-                investmentsBody.innerHTML = Object.entries(investmentsByPerson).sort((a,b)=>b[1]-a[1]).map(([p,v])=>`<tr><td><strong>${p}</strong></td><td class="valor">${formatMoney(v)}</td><td><div class="percentage-bar"><div class="percentage-fill" style="width:${totalInv?((v/totalInv)*100):0}%;background:#8b5cf6"></div><span class="percentage-text">${totalInv?((v/totalInv)*100).toFixed(1):0}%</span></div></td></tr>`).join('') || '<tr><td colspan="3">Nenhum investimento</td></tr>';
-            }
-        }
-        
-        // ========== ATUALIZAR TRANSAÇÕES ==========
-        function updateTransactions(searchTerm=''){
-            const tbody = document.getElementById('transactionsBody');
-            if(!tbody) return;
-            let filtered = [...financialData].sort((a,b)=>new Date(b.data)-new Date(a.data)).slice(0,15);
-            if(searchTerm) filtered = filtered.filter(t=>Object.values(t).some(v=>String(v).toLowerCase().includes(searchTerm)));
-            tbody.innerHTML = filtered.map(t=>`<tr><td>${t.data||'-'}</td><td><span class="badge ${t.tipo==='Receita'?'badge-success':t.tipo==='Despesa'?'badge-danger':'badge-info'}">${t.tipo||'-'}</span></td><td>${t.categoria||'-'}</td><td>${t.descricao||'-'}</td><td class="valor">${t.tipo==='Despesa'?'-':'+'} ${formatMoney(t.valor)}</td><td>${t.registro||'-'}</td></tr>`).join('');
-        }
-        
-        // ========== ATUALIZAR KPIs ==========
-        function updateKPIs(){
-            const revenue = getTotalByType('Receita');
-            const expense = getTotalByType('Despesa');
-            const investment = getTotalByType('Investimento');
-            const balance = revenue - expense;
-            const el = (id,val)=>{const e=document.getElementById(id);if(e)e.innerText=val;};
-            el('totalRevenue', formatMoney(revenue));
-            el('totalExpense', formatMoney(expense));
-            el('totalInvestment', formatMoney(investment));
-            el('totalBalance', formatMoney(balance));
-        }
-        
-        // ========== GERAR INSIGHT ==========
-        function generateInsight(){
-            const exp = financialData.filter(d=>d.tipo==='Despesa').reduce((s,d)=>s+d.valor,0);
-            const rev = financialData.filter(d=>d.tipo==='Receita').reduce((s,d)=>s+d.valor,0);
-            const cat = {};
-            financialData.filter(d=>d.tipo==='Despesa').forEach(d=>{cat[d.categoria]=(cat[d.categoria]||0)+d.valor;});
-            const top = Object.entries(cat).sort((a,b)=>b[1]-a[1])[0];
-            const container = document.getElementById('insightContent');
-            if(container){
-                if(rev>exp){
-                    container.innerHTML = `<div class="insight-card"><div class="insight-icon" style="background:#10b98120;color:#10b981"><i class="fas fa-smile"></i></div><div class="insight-text"><div class="insight-title">Saldo Positivo!</div><div class="insight-description">Seu saldo está positivo em ${formatMoney(rev-exp)}! Continue assim!</div></div></div>`;
-                } else if(top){
-                    container.innerHTML = `<div class="insight-card"><div class="insight-icon" style="background:#ef444420;color:#ef4444"><i class="fas fa-chart-line"></i></div><div class="insight-text"><div class="insight-title">Maior Gasto</div><div class="insight-description">Sua maior despesa é com ${top[0]}: ${formatMoney(top[1])}</div></div></div>`;
-                } else {
-                    container.innerHTML = `<div class="insight-card"><div class="insight-icon" style="background:#3b82f620;color:#3b82f6"><i class="fas fa-chart-line"></i></div><div class="insight-text"><div class="insight-title">Análise Financeira</div><div class="insight-description">Continue acompanhando seus gastos para manter as finanças saudáveis!</div></div></div>`;
-                }
-            }
-        }
-        
         // ========== GRÁFICOS DASHBOARD ==========
         function updateDashboardCharts(){
             if(!document.getElementById('catChart')) return;
+            
             const expensesByCat = {};
             financialData.filter(d=>d.tipo==='Despesa').forEach(d=>{expensesByCat[d.categoria]=(expensesByCat[d.categoria]||0)+d.valor;});
             if(charts.cat) charts.cat.destroy();
-            charts.cat = new Chart(document.getElementById('catChart'),{type:'doughnut',data:{labels:Object.keys(expensesByCat),datasets:[{data:Object.values(expensesByCat),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6']}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{position:'bottom'}}}});
+            charts.cat = new Chart(document.getElementById('catChart'),{type:'doughnut',data:{labels:Object.keys(expensesByCat),datasets:[{data:Object.values(expensesByCat),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6']}]},options:{responsive:true,plugins:{legend:{position:'bottom'}}}});
             
             const payment = {};
             financialData.forEach(d=>{if(d.formaPagamento)payment[d.formaPagamento]=(payment[d.formaPagamento]||0)+d.valor;});
@@ -460,16 +529,37 @@
             charts.monthly = new Chart(document.getElementById('monthlyChart'),{type:'line',data:{labels:months,datasets:[{label:'Receitas',data:months.map(m=>monthly[m].r),borderColor:'#10b981',fill:true,backgroundColor:'rgba(16,185,129,0.1)',tension:0.4},{label:'Despesas',data:months.map(m=>monthly[m].e),borderColor:'#ef4444',fill:true,backgroundColor:'rgba(239,68,68,0.1)',tension:0.4}]},options:{responsive:true,plugins:{tooltip:{callbacks:{label:(ctx)=>`R$ ${ctx.raw.toFixed(2)}`}}}}});
         }
         
+        // ========== GERAL PAGE ==========
+        function renderGeral(){
+            const categories = [...new Set(financialData.map(d=>d.categoria).filter(Boolean))];
+            const registros = [...new Set(financialData.map(d=>d.registro).filter(Boolean))];
+            return `
+                <div class="page-header"><h1 class="page-title">Registro Geral</h1><div class="export-buttons"><button class="btn-export" id="exportExcel"><i class="fas fa-file-excel"></i> Excel</button><button class="btn-export" id="exportCSV"><i class="fas fa-file-csv"></i> CSV</button><button class="btn-export" id="exportPDF"><i class="fas fa-file-pdf"></i> PDF</button></div></div>
+                <div class="filters-panel">
+                    <div class="filter-group"><i class="fas fa-calendar"></i><input type="date" id="startDate" placeholder="Data inicial"></div>
+                    <div class="filter-group"><i class="fas fa-calendar"></i><input type="date" id="endDate" placeholder="Data final"></div>
+                    <div class="filter-group"><i class="fas fa-tag"></i><select id="filterCat"><option value="">Categoria</option>${categories.map(c=>`<option value="${c}">${c}</option>`).join('')}</select></div>
+                    <div class="filter-group"><i class="fas fa-user"></i><select id="filterRegistro"><option value="">Registro</option>${registros.map(r=>`<option value="${r}">${r}</option>`).join('')}</select></div>
+                    <div class="filter-group"><i class="fas fa-chart-simple"></i><select id="filterTypeGeral"><option value="">Tipo</option><option value="Receita">Receita</option><option value="Despesa">Despesa</option><option value="Investimento">Investimento</option></select></div>
+                    <button class="btn-clear" id="clearFilters"><i class="fas fa-times"></i> Limpar</button>
+                </div>
+                <div class="summary-bar"><div class="summary-item"><span>Registros:</span><strong id="totalReg">${financialData.length}</strong></div><div class="summary-item"><span>Total:</span><strong id="totalSum">${formatMoney(financialData.reduce((s,d)=>s+d.valor,0))}</strong></div></div>
+                <div class="table-card"><div class="table-responsive"><table class="full-table"><thead><tr><th>Data</th><th>Tipo</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Registro</th></tr></thead><tbody id="tableBody"></tbody></table></div></div>
+            `;
+        }
+        
         // ========== TABELA GERAL ==========
         function updateGeneralTable(){
             let filtered = [...financialData];
             const start=document.getElementById('startDate')?.value;
             const end=document.getElementById('endDate')?.value;
             const cat=document.getElementById('filterCat')?.value;
+            const reg=document.getElementById('filterRegistro')?.value;
             const type=document.getElementById('filterTypeGeral')?.value;
             if(start) filtered=filtered.filter(d=>d.data>=start);
             if(end) filtered=filtered.filter(d=>d.data<=end);
             if(cat) filtered=filtered.filter(d=>d.categoria===cat);
+            if(reg) filtered=filtered.filter(d=>d.registro===reg);
             if(type) filtered=filtered.filter(d=>d.tipo===type);
             const regEl = document.getElementById('totalReg');
             const sumEl = document.getElementById('totalSum');
@@ -477,27 +567,22 @@
             if(sumEl) sumEl.innerText=formatMoney(filtered.reduce((s,d)=>s+d.valor,0));
             const tbody=document.getElementById('tableBody');
             if(tbody){
-                tbody.innerHTML=filtered.map(d=>`<tr><td>${d.data||'-'}</td><td><span class="badge ${d.tipo==='Receita'?'badge-success':d.tipo==='Despesa'?'badge-danger':'badge-info'}">${d.tipo||'-'}</span></td><td>${d.categoria||'-'}</td><td>${d.descricao||'-'}</td><td class="valor">${d.tipo==='Despesa'?'-':'+'} ${formatMoney(d.valor)}</td><td>${d.registro||'-'}</td></tr>`).join('') || '<tr><td colspan="6">Nenhum registro</td></tr>';
+                tbody.innerHTML=filtered.map(d=>`<tr><td>${d.data||'-'}</td><td><span class="badge ${d.tipo==='Receita'?'badge-success':d.tipo==='Despesa'?'badge-danger':'badge-info'}">${d.tipo||'-'}</span></td><td>${d.categoria||'-'}</td><td>${d.descricao||'-'}</td><td class="valor">${d.tipo==='Despesa'?'- ':'+ '}${formatMoney(d.valor)}</td><td>${d.registro||'-'}</td></tr>`).join('') || '<td><td colspan="6">Nenhum registro</td></tr>';
             }
         }
         
         // ========== EXPORTAÇÕES ==========
         function exportToExcel(){
             const ws=XLSX.utils.json_to_sheet(financialData.map(d=>({Data:d.data,Tipo:d.tipo,Categoria:d.categoria,Descrição:d.descricao,Valor:d.valor,Registro:d.registro})));
-            const wb=XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb,ws,'Financeiro');
-            XLSX.writeFile(wb,`financas_${new Date().toISOString().split('T')[0]}.xlsx`);
+            const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Financeiro');XLSX.writeFile(wb,`financas_${new Date().toISOString().split('T')[0]}.xlsx`);
         }
         function exportToCSV(){
             const headers=['Data','Tipo','Categoria','Descrição','Valor','Registro'];
             const rows=financialData.map(d=>headers.map(h=>String(d[h.toLowerCase()]||'')).join(','));
-            const blob=new Blob([headers.join(',')+'\n'+rows.join('\n')],{type:'text/csv'});
-            const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`financas_${new Date().toISOString().split('T')[0]}.csv`;a.click();
-            URL.revokeObjectURL(a.href);
+            const blob=new Blob([headers.join(',')+'\n'+rows.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`financas_${new Date().toISOString().split('T')[0]}.csv`;a.click();URL.revokeObjectURL(a.href);
         }
         async function exportToPDF(){
-            const {jsPDF}=window.jspdf;
-            const doc=new jsPDF('landscape','mm','a4');
+            const {jsPDF}=window.jspdf;const doc=new jsPDF('landscape','mm','a4');
             doc.setFillColor(59,130,246);doc.rect(0,0,297,30,'F');doc.setTextColor(255,255,255);doc.setFontSize(20);doc.text('Mërkai Finance',20,20);
             doc.setTextColor(0,0,0);doc.setFontSize(10);doc.text(`Emissão: ${new Date().toLocaleDateString()}`,20,40);
             const body=financialData.map(d=>[d.data||'',d.tipo||'',d.categoria||'',d.descricao||'',`R$ ${d.valor.toFixed(2)}`,d.registro||'']);
@@ -533,7 +618,7 @@
                     document.querySelectorAll('[data-page]').forEach(b=>b.classList.remove('active'));
                     btn.classList.add('active');
                     loadPage(currentPage);
-                    sidebar.classList.remove('open');
+                    if(sidebar) sidebar.classList.remove('open');
                     if(overlay) overlay.classList.remove('active');
                 });
             });
@@ -555,19 +640,22 @@
                     document.getElementById('searchInput')?.addEventListener('input',(e)=>updateTransactions(e.target.value.toLowerCase()));
                 } else if(page === 'dashboard'){
                     updateDashboardCharts();
+                    document.getElementById('filterCategory')?.addEventListener('change',()=>{});
+                    document.getElementById('filterType')?.addEventListener('change',()=>{});
+                    document.getElementById('filterMonth')?.addEventListener('change',()=>{});
                 } else if(page === 'geral'){
                     updateGeneralTable();
                     document.getElementById('exportExcel')?.addEventListener('click',exportToExcel);
                     document.getElementById('exportCSV')?.addEventListener('click',exportToCSV);
                     document.getElementById('exportPDF')?.addEventListener('click',exportToPDF);
                     document.getElementById('clearFilters')?.addEventListener('click',()=>{
-                        ['startDate','endDate','filterCat','filterTypeGeral'].forEach(id=>{
+                        ['startDate','endDate','filterCat','filterRegistro','filterTypeGeral'].forEach(id=>{
                             const el=document.getElementById(id);
                             if(el) el.value='';
                         });
                         updateGeneralTable();
                     });
-                    ['startDate','endDate','filterCat','filterTypeGeral'].forEach(id=>{
+                    ['startDate','endDate','filterCat','filterRegistro','filterTypeGeral'].forEach(id=>{
                         document.getElementById(id)?.addEventListener('change',updateGeneralTable);
                     });
                 }
